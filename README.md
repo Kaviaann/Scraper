@@ -78,7 +78,11 @@ npm install @kaviaann/scraper
 
 2. Then import it to your code
 ```js
+// ESM
 import { searchAnime } from '@kaviaann/scraper'
+
+// CommonJS
+const {default : searchAnime } = require('@kaviaann/scraper')
 ```
 
 3. Then use it ( Example for anime scrape )
