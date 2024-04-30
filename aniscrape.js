@@ -177,9 +177,9 @@ const scrape = async (name, callback) => {
 }
 
 scrape("boku no hero academia", async datas => {
-
+    
+    
     console.log(datas)
-
 
 
 })
