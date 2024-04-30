@@ -7,7 +7,7 @@
 
 <div align="center">
   <kbd>
-    <img src="https://avatars.githubusercontent.com/u/138269134?v=4" style="width : 250px; height : 250px">
+    <img src="https://avatars.githubusercontent.com/u/138269134?v=4" href="https://github.com/kaviaann" style="width : 250px; height : 250px">
   </kbd>
   <h3>Kaviaann</h3>
   <p>HTML, CSS, Javascript, jQuery, NodeJS</p>
@@ -67,12 +67,12 @@ Kaviaann Scraper bisa membantu mu scrape website lain dengan sangat mudah ( Tanp
 
 2. Then import it to your code
 ```js
-import { searchAnime } from './index.js'
+import { searchAnime } from '@kaviaann/scraper'
 ```
 
 3. Then use it ( Example for anime scrape )
 ```js
-import { searchAnime } from './index.js'
+import { searchAnime } from '@kaviaann/scraper'
 
 
 searchAnime("Boku No Hero Academia", (datas) => {
