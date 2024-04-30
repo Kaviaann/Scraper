@@ -63,7 +63,7 @@ Kaviaann Scraper bisa membantu mu scrape website lain dengan sangat mudah ( Tanp
 
 ## How To Use
 
-1. Copy The Github Repository Or Install Package
+1. Copy Github Repository ( Non-Stable ) Or Install Package ( Stable )
 ```
 //yarn
 yarn add @kaviaann/scraper
