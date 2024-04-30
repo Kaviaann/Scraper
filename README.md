@@ -1,12 +1,8 @@
-
-
 <h1 align="center">About Me</h1>
 
 
-
 <br>
 <br>
-
 
 
 <div align="center">
@@ -40,12 +36,71 @@
 </div>
 
 
+<br>
+<br>
+
+
+## ! Attention !
+Eng : This Repository / Package Is On Beta Access And Im Still Making New Scrape, So I Hope For You All Pantience 😋  
+Id : Repository / Package Ini Masih Dalam Akses Beta Dan Ak Masih Membuat Scraper Yang Baru, Jadi Dimohon Kesabarannya Yaa 😋
+
 
 <br>
 <br>
+
+
+## Feature
+Kaviaan Scraper can help you scrape another website so easily ( Without Using Puppeteer, etc ) making it can run on a cloud computing platform.
+Also with simple structure of the scrape response make you easier to understand 😄  
+<br>
+<br>
+Kaviaann Scraper bisa membantu mu scrape website lain dengan sangat mudah ( Tanpa Menggunakan Puppeteer, dll ) membuat ini bisa berjalan dalam suatu panel ( Server ). Juga dengan struktur respon scrape yang simple membuat kamu lebih mudah untuk mengerti 😄
+
+
+<br>
 <br>
 
 
+## How To Use
 
-<h1>Information</h1>
-<p>Pertama2 marilah kita panjatkan puji dan syukur atas kehadirat tuhan yang maha esa karna atas berkat dan nikmatnya kita semua bisa bertemu di repository ini dengan sehat wal'afiat, aamiin. Kaviaann Scraper, Sebuah repository milik <a href="https://github.com/kaviaann>Kaviaann</a></p>
+1. Copy The Github Repository
+
+2. Then import it to your code
+```js
+import { searchAnime } from './index.js'
+```
+
+3. Then use it ( Example for anime scrape )
+```js
+import { searchAnime } from './index.js'
+
+
+searchAnime("Boku No Hero Academia", (datas) => {
+
+  console.log(datas.map(v => v.title)
+  // show all the result title
+
+})
+```
+
+
+<br>
+<br>
+
+
+## Updates
+
+| Date | Name | Feature |
+| :---- | :----: | :------ |
+| 30/04/24 | searchAnime | Anime Title, Type, Season, Rating, Synops, Genres |
+
+
+<br>
+<br>
+
+
+## Upcoming
+
+| Name | Feature |
+| :---: | :----- |
+| Google | Google Search Result |
