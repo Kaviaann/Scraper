@@ -64,7 +64,7 @@ Kaviaann Scraper bisa membantu mu scrape website lain dengan sangat mudah ( Tanp
 ## How To Use
 
 1. Copy The Github Repository Or Install Package
-```bash
+```
 //yarn
 yarn @kaviaann/scraper
 
