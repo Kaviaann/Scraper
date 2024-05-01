@@ -1,1 +1,3 @@
-export * from "./aniscrape.js";
+module.exports = { 
+  ...require("./lib/anime.js")
+};
