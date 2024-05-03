@@ -1,3 +1,5 @@
+const anime = require("./lib/anime.js")
+
 module.exports = { 
-  ...require("./lib/anime.js")
+  ...anime
 };
