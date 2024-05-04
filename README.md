@@ -14,19 +14,19 @@
   <br>
   <div>
     <kbd>
-      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=html" style="width:100% height:25%">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=html" style="width:100% height:50%">
     </kbd>
      <kbd>
-      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=css" style="width:100% height:25%">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=css" style="width:100% height:50%">
     </kbd>
      <kbd>
-      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=javascript" style="width:100% height:25%">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=javascript" style="width:100% height:50%">
     </kbd>
      <kbd>
-      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=jquery" style="width:100% height:25%">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=jquery" style="width:100% height:50%">
     </kbd>
      <kbd>
-      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=nodejs" style="width:100% height:25%">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=nodejs" style="width:100% height:50%">
     </kbd>
   </div>
   <br>
