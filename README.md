@@ -14,24 +14,24 @@
   <br>
   <div>
     <kbd>
-      <img src="https://skillicons.dev/icons?i=html" style="width:90px; height:90px">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=html" style="width:90px; height:90px">
     </kbd>
      <kbd>
-      <img src="https://skillicons.dev/icons?i=css" style="width:90px; height:90px">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=css" style="width:90px; height:90px">
     </kbd>
      <kbd>
-      <img src="https://skillicons.dev/icons?i=javascript" style="width:90px; height:90px">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=javascript" style="width:90px; height:90px">
     </kbd>
      <kbd>
-      <img src="https://skillicons.dev/icons?i=jquery" style="width:90px; height:90px">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=jquery" style="width:90px; height:90px">
     </kbd>
      <kbd>
-      <img src="https://skillicons.dev/icons?i=nodejs" style="width:90px; height:90px">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=nodejs" style="width:90px; height:90px">
     </kbd>
   </div>
   <br>
   <kbd>
-    <img src="https://github-readme-activity-graph.vercel.app/graph?username=kaviaann&theme=tokyo-night" style="width:745px; height:265px">
+    <img href="https://github.com/kaviaann" src="https://github-readme-activity-graph.vercel.app/graph?username=kaviaann&theme=tokyo-night" style="width:745px; height:265px">
   </kbd>
 </div>
 
@@ -42,6 +42,7 @@
 
 ## ! Attention !
 Eng : This Repository / Package Is On Beta Access And Im Still Making New Scrape, So I Hope For You All Pantience 😋  
+
 Id : Repository / Package Ini Masih Dalam Akses Beta Dan Ak Masih Membuat Scraper Yang Baru, Jadi Dimohon Kesabarannya Yaa 😋
 
 
@@ -63,12 +64,15 @@ Kaviaann Scraper bisa membantu mu scrape website lain dengan sangat mudah ( Tanp
 
 ## How To Use
 
-1. Copy Github Repository ( Non-Stable ) Or Install Package ( Stable )
+1. Copy Github Repository ( Not Stable )
 ```
-//Git
 git clone https://github.com/Kaviaann/Scraper.git
+```
 
+<br>
 
+Or Using Yarn / Npm To Download Package ( More Stable )
+```
 //yarn
 yarn add @kaviaann/scraper
 
@@ -76,21 +80,25 @@ yarn add @kaviaann/scraper
 npm install @kaviaann/scraper
 ```
 
+<br>
+
 2. Then import it to your code
 ```js
 // ESM
-import { searchAnime } from '@kaviaann/scraper'
+import Scraper from '@kaviaann/scraper'
 
 // CommonJS
-const {default : searchAnime } = require('@kaviaann/scraper')
+const { searchAnime } = require('@kaviaann/scraper')
 ```
+
+<br>
 
 3. Then use it ( Example for anime scrape )
 ```js
-import { searchAnime } from '@kaviaann/scraper'
+import Scraper from '@kaviaann/scraper'
 
 
-searchAnime("Boku No Hero Academia", (datas) => {
+Scraper.searchAnime("Boku No Hero Academia", (datas) => {
 
   console.log(datas.map(v => v.title)
   // show all the result title
