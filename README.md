@@ -31,7 +31,7 @@
   </div>
   <br>
   <kbd>
-    <img href="https://github.com/kaviaann" src="https://github-readme-activity-graph.vercel.app/graph?username=kaviaann&theme=tokyo-night" style="width:745px; height:265px">
+    <img href="https://github.com/kaviaann" src="https://github-readme-activity-graph.vercel.app/graph?username=kaviaann&theme=tokyo-night" style="width:100%; height:265px">
   </kbd>
 </div>
 
