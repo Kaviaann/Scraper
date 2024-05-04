@@ -14,19 +14,19 @@
   <br>
   <div>
     <kbd>
-      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=html" style="width:90px; height:90px">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=html" style="width:15%; height:25%">
     </kbd>
      <kbd>
-      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=css" style="width:90px; height:90px">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=css" style="width:15%; height:25%">
     </kbd>
      <kbd>
-      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=javascript" style="width:90px; height:90px">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=javascript" style="width:15%; height:25%">
     </kbd>
      <kbd>
-      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=jquery" style="width:90px; height:90px">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=jquery" style="width:15%; height:25%">
     </kbd>
      <kbd>
-      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=nodejs" style="width:90px; height:90px">
+      <img href="https://github.com/kaviaann" src="https://skillicons.dev/icons?i=nodejs" style="width:15%; height:25%">
     </kbd>
   </div>
   <br>
