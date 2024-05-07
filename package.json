@@ -2,7 +2,7 @@
   "name": "@kaviaann/scraper",
   "main": "index.js",
   "type": "commonjs",
-  "version": "1.0.01",
+  "version": "1.0.2",
   "description": "Scraper",
   "directories": {
     "test": "test"
@@ -36,7 +36,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Scraper",
+    "scraper",
+    "Anime",
+    "anime",
+    "Cheerio",
+    "cheerio",
+    "puppeteer",
+    "Puppeteer",
+    "Web",
+    "web",
+    "JSON",
+    "Json",
+    "json",
+    "free",
+    "scrape",
+    "Scrape"
+  ],
+  "author": "Kaviaann",
   "license": "ISC"
 }
