@@ -2,10 +2,16 @@
   "name": "@kaviaann/scraper",
   "main": "index.js",
   "type": "commonjs",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Scraper",
   "directories": {
     "test": "test"
+  },
+  "exports" : {
+    "." : {
+      "import" : "./src/ejs/index.js",
+      "require" : "./src/cjs/index.js"
+    }
   },
   "dependencies": {
     "asynckit": "^0.4.0",

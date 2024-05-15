@@ -1,39 +1,6 @@
-const cheerio = require('cheerio');
-const { TData } = require('./type')
+const cheerio = require('cheerio')
 
-
-/**
- * @callback AnimeCallback
- * @param {Array<TData>} datas An Array Of Animes Datas
- */
-
-
-/**
- * @typedef {Function} TSearchAnime
- * @param {String} name Anime Name
- * @param {AnimeCallback} callback Callback Function
- * @example
- *
- * scrape("Boku No Hero Academia", async (datas) => {
- *
- *  console.log(datas)
- *  // Output :
- *
- *  // [
- *  //   {
- *  //     title: 'Boku no Hero Academia: Memories',
- *  //     type: 'Special',
- *  //     score: '6.41',
- *  //     synops: 'Rekap Boku no Hero Academia menjelang musim ketujuh.',
- *  //     genres: [ 'Action' ],
- *  //     season: null
- *  //   },
- *  //   ...
- *  // ]
- *
- * })
- */
-const searchAnime = async (name, callback) => {
+exports.searchAnime = async (name, callback) => {
   const url = `https://www.mynimeku.com/?s=${encodeURI(name)}`;
 
   const response = await fetch(url);
@@ -44,7 +11,6 @@ const searchAnime = async (name, callback) => {
   // Get Children  ( a (Title) & div ( other ))
   const content = $(".flexbox2-content");
 
-  /** @type {Array<{title : String, type : String, info : String, synops : String, genres : String}>} */
   const datas = [];
 
   // console.log(content)
@@ -148,7 +114,3 @@ const searchAnime = async (name, callback) => {
 
   callback(datas);
 };
-
-
-module.exports = { searchAnime }
-
