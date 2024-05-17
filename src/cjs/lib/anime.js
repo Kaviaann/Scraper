@@ -1,6 +1,6 @@
 const cheerio = require('cheerio')
 
-exports.searchAnime = async (name, callback) => {
+exports.animeSearch = async (name, callback) => {
   const url = `https://www.mynimeku.com/?s=${encodeURI(name)}`;
 
   const response = await fetch(url);
@@ -114,3 +114,97 @@ exports.searchAnime = async (name, callback) => {
 
   callback(datas);
 };
+
+
+
+
+
+exports.animeCharacter = async (name, callback) => {
+
+  const res = await fetch(`https://myanimelist.net/character.php?cat=character&q=${encodeURI(name)}`, {
+    method : "GET"
+  }).then(v => v.text())
+
+  const $ = cheerio.load(res)
+  const datas = []
+
+
+  
+  for(let i of $('tr')){
+    const data = {
+      name : "",
+      link : "",
+      thumb : "",
+      anime : [],
+      others : []
+    }
+    const o = i.children.filter(v => v.type === "tag")
+
+    for(let u of o){
+      for(let a of u.children.filter(v => v.type === 'tag')){
+
+        switch(a.name){
+
+
+          case 'div':{
+            data.link = $(a).children('a')[0].attribs.href
+            data.thumb = $(a).children('a')[0].children[0].attribs['data-src']
+            break;
+          }
+
+          case 'a':{
+            data.name = $(a)[0].children[0].data
+            break;
+          }
+
+          case 'small':{
+            for(let small of a.children.filter(v => v.type === 'tag')){
+              switch(small.name){
+                case 'a':{
+                  const anime = {
+                    title : "",
+                    link : ""
+                  }
+
+                  anime.url = 'https://myanimelist.net' + small.attribs.href
+                  anime.title = small.children[0].data
+
+                  data.anime.push(anime)
+                }
+
+                case 'div':{
+                  for(let other of small.children.filter(v => v.type === 'tag')){
+                    switch(other.name){
+                      case 'a':{
+                        const others = {
+                          type : "",
+                          title : "",
+                          link : ""
+                        }
+                        others.type = other.attribs.href.split('/')[1]
+                        others.title = other.children[0].data
+                        others.link = 'https://myanimelist.net' + other.attribs.href
+                        data.others.push(others)
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            break;
+          }
+
+
+        }
+
+      }
+    }
+
+
+    datas.push(data)
+
+  }
+
+  callback(datas)
+
+}

@@ -1,4 +1,4 @@
-export type AnimeData = {
+export interface AnimeData {
   title : String,
   link : String,
   thumb : String,
@@ -8,5 +8,24 @@ export type AnimeData = {
   synops : String,
   genres : String[]
 }
-export type searchCallback = (datas : AnimeData[]) => Promise<void>
-export declare function searchAnime(name : string, callback : searchCallback) : Promise<void>
+
+export interface CharacterAnime {
+  title : String,
+  link : String
+}
+
+export interface CharacterOther {
+  type : String | "manga",
+  title : String,
+  link : String
+}
+export interface CharacterData {
+  title : String,
+  link : String,
+  thumb : String,
+  anime : CharacterAnime[],
+  other : CharacterOther[],
+}
+
+export declare function animeSearch(name : string, callback : (datas : AnimeData[]) => Promise<void>) : Promise<void>
+export declare function animeCharacter(name : string, callback : (datas : CharacterData[]) => Promise<void>) : Promise<void>

@@ -84,21 +84,21 @@ npm install @kaviaann/scraper
 
 2. Then import it to your code
 ```js
-// ESM
-import Scraper from '@kaviaann/scraper'
+// Module
+import { animeSearch } from '@kaviaann/scraper'
 
 // CommonJS
-const { searchAnime } = require('@kaviaann/scraper')
+const { animeSearch } = require('@kaviaann/scraper')
 ```
 
 <br>
 
 3. Then use it ( Example for anime scrape )
 ```js
-import Scraper from '@kaviaann/scraper'
+import { animeSearch } from '@kaviaann/scraper'
 
 
-Scraper.searchAnime("Boku No Hero Academia", (datas) => {
+animeSearch("Boku No Hero Academia", (datas) => {
 
   console.log(datas.map(v => v.title)
   // show all the result title
@@ -115,7 +115,8 @@ Scraper.searchAnime("Boku No Hero Academia", (datas) => {
 
 | Date | Name | Feature |
 | :---- | :----: | :------ |
-| 30/04/24 | searchAnime | Anime Title, Type, Season, Rating, Synops, Genres |
+| 30/04/24 | animeSearch | Anime Title, Thumbnail, Link, Type, Season, Rating, Synops, Genres |
+| 17/05/24 | animeCharacter | Character Name, Thumbnail, Link, Anime, Other |
 
 
 <br>
@@ -126,4 +127,4 @@ Scraper.searchAnime("Boku No Hero Academia", (datas) => {
 
 | Name | Feature |
 | :---: | :----- |
-| Google | Google Search Result |
+| characterInfo | All Information About The Given Character |

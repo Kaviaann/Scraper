@@ -10,7 +10,8 @@
   "exports" : {
     "." : {
       "import" : "./src/ejs/index.js",
-      "require" : "./src/cjs/index.js"
+      "require" : "./src/cjs/index.js",
+      "types" : "./src/@types/index.js"
     }
   },
   "dependencies": {
