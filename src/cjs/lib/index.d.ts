@@ -1,2 +1,2 @@
 export * from './anime'
-export * from './google'
+export * from './sosmed'

@@ -2,16 +2,15 @@
   "name": "@kaviaann/scraper",
   "main": "index.js",
   "type": "commonjs",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Scraper",
   "directories": {
     "test": "test"
   },
-  "exports" : {
-    "." : {
-      "import" : "./src/ejs/index.js",
-      "require" : "./src/cjs/index.js",
-      "types" : "./src/@types/index.js"
+  "exports": {
+    ".": {
+      "import": "./src/ejs/index.js",
+      "require": "./src/cjs/index.js"
     }
   },
   "dependencies": {
@@ -31,6 +30,7 @@
     "entities": "^4.5.0",
     "follow-redirects": "^1.15.6",
     "form-data": "^4.0.0",
+    "groq-sdk": "^0.3.3",
     "htmlparser2": "^8.0.2",
     "mime-db": "^1.52.0",
     "mime-types": "^2.1.35",
@@ -39,7 +39,6 @@
     "parse5-htmlparser2-tree-adapter": "^7.0.0",
     "proxy-from-env": "^1.1.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,3 +1,4 @@
 module.exports = {
-  ...require('./anime')
+  ...require('./anime'),
+  ...require('./sosmed')
 }
