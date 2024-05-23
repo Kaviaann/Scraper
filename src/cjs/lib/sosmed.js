@@ -28,9 +28,17 @@ async function tiktokSearch(query) {
             title: v.title,
             cover: v.cover,
             origin_cover: v.origin_cover,
+            link: `https://www.tiktok.com/@${v.author.unique_id}/video/${v.id}`,
             no_watermark: v.play,
             watermark: v.wmplay,
-            music: v.music,
+            music: v.music_info,
+            views: v.play_count,
+            like: v.digg_count,
+            comment: v.comment_count || null,
+            share: v.share_count,
+            download: v.download_count || null,
+            save: v.collect_count || null,
+            create_time: v.create_time * 1000,
           };
         });
 
@@ -69,9 +77,21 @@ async function tiktokInfo(url) {
           title: video.title,
           cover: video.cover,
           origin_cover: video.origin_cover,
+          link: `https://www.tiktok.com/@${video.author.unique_id}/video/${video.id}`,
           no_watermark: video.play,
+          hd: video.hdplay || null,
           watermark: video.wmplay,
           music: video.music,
+          no_wm_size: video.size,
+          wm_size: video.wm_size,
+          hd_size: video.hd_size || null,
+          views: video.play_count,
+          like: video.digg_count,
+          comment: video.comment_count || null,
+          share: video.share_count,
+          download: video.download_count || null,
+          save: video.collect_count,
+          create_time: video.create_time * 1000,
         };
         resolve(result);
       }
@@ -87,7 +107,7 @@ async function tiktokUserPost(user) {
     const res = await fetch("https://www.tikwm.com/api/user/posts", {
       method: "POST",
       body: new URLSearchParams({
-        unique_id: `@${user}`,
+        unique_id: `@${user.replace(/@/gi, "")}`,
         hd: 1,
         cursor: 0,
       }),
@@ -106,23 +126,25 @@ async function tiktokUserPost(user) {
       comment_count,
       play,
       wmplay,
-      music,
+      music_info,
+      id,
+      author,
     } of posts) {
       result.push({
         title,
         duration,
+        link: `https://www.tiktok.com/@${author.unique_id}/video/${id}`,
         origin_cover,
         views: play_count,
         like: digg_count,
         comment: comment_count,
         share: share_count,
         download: download_count,
-        saved: collect_count,
+        saved: collect_count || null,
         create_time,
-        release_date: new Date(create_time * 1000),
         no_watermark: play,
         watermark: wmplay,
-        music: music,
+        music: music_info,
       });
     }
 

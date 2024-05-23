@@ -2,9 +2,27 @@ export interface TiktokVideoData {
   title: String;
   cover: URL;
   origin_cover: URL;
+  link: URL;
   no_watermark: URL;
   watermark: URL;
-  music: URL;
+  music: TiktokMusicInfo;
+  views: Number;
+  like: Number;
+  comment: Number | null;
+  share: Number;
+  download: Number | null;
+  save: Number | null;
+  create_time: Number;
+}
+
+export interface TiktokMusicInfo {
+  id: String;
+  title: String;
+  play: URL;
+  author: String;
+  original: Boolean;
+  duration: Number;
+  album: String;
 }
 export interface TiktokPostData {
   title: String;
@@ -12,15 +30,14 @@ export interface TiktokPostData {
   origin_cover: URL;
   views: Number;
   like: Number;
-  comment: Number;
+  comment: Number | null;
   share: Number;
-  download: Number;
-  saved: Number;
+  download: Number | null;
+  saved: Number | null;
   created_time: Number;
-  release_date: Date;
   no_watermark: URL;
   watermark: URL;
-  music: URL;
+  music: TiktokMusicInfo;
 }
 export declare function tiktokSearch(query: string): Promise<TiktokVideoData[]>;
 export declare function tiktokInfo(url: URL): Promise<TiktokVideoData>;
