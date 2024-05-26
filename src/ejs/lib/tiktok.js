@@ -1,5 +1,3 @@
-import cheerio from "cheerio";
-
 async function tiktokSearch(query) {
   return new Promise(async (resolve, reject) => {
     try {

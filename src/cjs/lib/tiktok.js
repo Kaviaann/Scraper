@@ -1,5 +1,3 @@
-const cheerio = require("cheerio");
-
 async function tiktokSearch(query) {
   return new Promise(async (resolve, reject) => {
     try {
