@@ -109,15 +109,18 @@ animeSearch("Boku No Hero Academia", (datas) => {
 
 ## Updates
 
-|  Date      |      Name        | Feature                                                            |
-|  :-------  | :-------------:  | :----------------------------------------------------------------- |
-|  30/04/24  |   animeSearch    | Anime Title, Thumbnail, Link, Type, Season, Rating, Synops, Genres |
-|  17/05/24  |  animeCharacter  | Character Name, Thumbnail, Link, Anime, Other                      |
-|  22/05/24  |   tiktokSearch   | Search Tiktok Video                                                |
-|  22/05/24  |    tiktokInfo    | Tiktok Video Info                                                  |
-|  22/05/24  |  tiktokUserPost  | Get Random Post Data From User                                     |
-|  26/05/24  |  animeCompany    | Search For Anime Company                                           |
-|  26/05/24  | animeCompanyInfo | Get all of the first result from animeCompany and get all infos    |
+| Date     |       Name       | Feature                                                            |
+| :------- | :--------------: | :----------------------------------------------------------------- |
+| 30/04/24 |   animeSearch    | Anime Title, Thumbnail, Link, Type, Season, Rating, Synops, Genres |
+| 17/05/24 |  animeCharacter  | Character Name, Thumbnail, Link, Anime, Other                      |
+| 22/05/24 |   tiktokSearch   | Search Tiktok Video                                                |
+| 22/05/24 |    tiktokInfo    | Tiktok Video Info                                                  |
+| 22/05/24 |  tiktokUserPost  | Get Random Post Data From User                                     |
+| 26/05/24 |   animeCompany   | Search For Anime Company                                           |
+| 26/05/24 | animeCompanyInfo | Get all of the first result from animeCompany and get all infos    |
+| 27/05/24 |       igdl       | Get instagram link for media                                       |
+| 27/05/24 |     igStalk      | Get all information from the given username                        |
+| 27/05/24 |     twitter      | Get twitter link for media ( Video Only )                          |
 
 <br>
 <br>

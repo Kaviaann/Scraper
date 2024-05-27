@@ -12,7 +12,6 @@ const animeSearch = async (name, callback) => {
   const content = $(".flexbox2-content");
 
   const datas = [];
-
   // console.log(content)
 
   new Promise(async (res) => {
