@@ -13,6 +13,7 @@ const igdl = async (url) => {
     })
       .then((v) => v.json())
       .then((v) => v.data);
+    if (!res) return reject("Video Bersifat Pribadi");
     const $ = cheerio.load(res);
     const data = {
       thumbnail: $("img").attr().src,
