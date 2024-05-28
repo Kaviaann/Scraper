@@ -1,7 +1,8 @@
 export interface InstagramDownload {
   thumbnail: URL;
-  link: URL;
+  type: "image" | "video";
   media: URL;
+  link: URL;
 }
 
 export interface InstagramSignature {
@@ -127,7 +128,7 @@ export interface InstagramStalk {
         width: Number;
         height: Number;
         url: String;
-        url_signature: instagramSignature;
+        url_signature: InstagramSignature;
       }
     ];
     highlights_tray_type: "DEFAULT";

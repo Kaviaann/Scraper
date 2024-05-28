@@ -15,8 +15,10 @@ exports.igdl = async (url) => {
       .then((v) => v.json())
       .then((v) => v.data);
     const $ = cheerio.load(res);
+    console.log(res);
     const data = {
       thumbnail: $("img").attr().src,
+      type: url.includes("reel") ? "video" : "image",
       media: $("div.download-items__btn").children("a").attr("href"),
       link: url,
     };

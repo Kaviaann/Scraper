@@ -16,6 +16,7 @@ const igdl = async (url) => {
     const $ = cheerio.load(res);
     const data = {
       thumbnail: $("img").attr().src,
+      type: url.includes("reel") ? "video" : "image",
       media: $("div.download-items__btn").children("a").attr("href"),
       link: url,
     };
