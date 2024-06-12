@@ -3,4 +3,5 @@ module.exports = {
   ...require("./tiktok"),
   ...require("./instagram"),
   ...require("./twitter"),
+  ...require('./github')
 };
