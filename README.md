@@ -121,14 +121,15 @@ animeSearch("Boku No Hero Academia", (datas) => {
 | 27/05/24 |       igdl       | Get instagram link for media                                       |
 | 27/05/24 |     igStalk      | Get all information from the given username                        |
 | 27/05/24 |     twitter      | Get twitter link for media ( Video Only )                          |
-
+| 12/06/24 |     githubUser   | Get Info About The Given Github User Infos                         |
 <br>
 <br>
 
 ## Upcoming
 
-|     Name      | Feature                                   |
-| :-----------: | :---------------------------------------- |
-| characterInfo | All Information About The Given Character |
-|  tiktokTrend  | Check Tiktok Trend On Various Region      |
-|  tiktokUser   | See All Of The User Info                  |
+|     Name      | Feature                                          |
+| :-----------: | :----------------------------------------------- |
+| characterInfo | All Information About The Given Character        |
+|  tiktokTrend  | Check Tiktok Trend On Various Region             |
+|  tiktokUser   | See All Of The User Info                         |
+|  githubRepo   | See All The Information On The Github Repository | 

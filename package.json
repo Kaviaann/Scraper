@@ -2,7 +2,7 @@
   "name": "@kaviaann/scraper",
   "main": "index.js",
   "type": "commonjs",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Scraper",
   "directories": {
     "test": "test"
@@ -10,7 +10,7 @@
   "exports": {
     ".": {
       "types" : "./src/@types",
-      "import": "./src/ejs/index.js",
+      "import": "./src/mjs/index.js",
       "require": "./src/cjs/index.js"
     }
   },
