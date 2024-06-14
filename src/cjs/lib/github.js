@@ -1,5 +1,10 @@
 const cheerio = require("cheerio");
 
+/**
+ * SCRAPED BY KAVIAANN
+ * FORBIDDEN TO SELL AND DELETE MY WM
+ */
+
 exports.githubUser = async (username) => {
   return new Promise(async (resolve, reject) => {
     try {
