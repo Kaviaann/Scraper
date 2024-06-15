@@ -121,6 +121,7 @@ animeSearch("Boku No Hero Academia", (datas) => {
 | 27/05/24 |       igDl       | Get instagram link for media                                       |
 | 27/05/24 |     igStalk      | Get all information from the given username                        |
 | 27/05/24 |     twitter      | Get twitter link for media ( Video Only )                          |
+<<<<<<< HEAD
 | 15/06/24 |    githubUser    | Get github user info by username                                   |
 | 15/06/24 |   tiktokSlide    | Scrape for tiktok slideshow                                        |
 | 15/06/24 |   tiktokStalk    | Get tiktok user info by username                                   |
@@ -128,13 +129,17 @@ animeSearch("Boku No Hero Academia", (datas) => {
 | 15/06/24 |      drive       | Get direct download link and other infos on drive link             |
 | 15/06/24 |    mediafire     | Get direct download link and other infos                           |
 
+=======
+| 12/06/24 |     githubUser   | Get Info About The Given Github User Infos                         |
+>>>>>>> e872c66f0f13362810a2413b9e94ae9224b166c4
 <br>
 <br>
 
 ## Upcoming
 
-|     Name      | Feature                                   |
-| :-----------: | :---------------------------------------- |
-| characterInfo | All Information About The Given Character |
-|  tiktokTrend  | Check Tiktok Trend On Various Region      |
-|  tiktokUser   | See All Of The User Info                  |
+|     Name      | Feature                                          |
+| :-----------: | :----------------------------------------------- |
+| characterInfo | All Information About The Given Character        |
+|  tiktokTrend  | Check Tiktok Trend On Various Region             |
+|  tiktokUser   | See All Of The User Info                         |
+|  githubRepo   | See All The Information On The Github Repository | 
