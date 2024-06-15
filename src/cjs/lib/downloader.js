@@ -68,11 +68,8 @@ async function mediafire(url) {
   });
 }
 
-mediafire(
-  "https://www.mediafire.com/file/fj5fxntcdgzw21u/database.sql/file"
-).then((v) => console.log(v));
-
 module.exports = {
   terabox,
   drive,
+  mediafire,
 };

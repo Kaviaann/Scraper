@@ -34,7 +34,41 @@ async function drive(url) {
   });
 }
 
+async function mediafire(url) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!/mediafire\.com\/file\//gi.test(url)) return reject("Invalid URL");
+      const res = await fetch(url).then((v) => v.text());
+      const $ = cheerio.load(res);
+      const button = $("body").find(".dl-btn-cont");
+      const dlinfo = $("body").find(".dl-info");
+      resolve({
+        name: $(button).find("div.dl-btn-label").text().trim(),
+        filename: $(button).find("div.dl-btn-label").attr("title"),
+        type: path.extname($(button).find("div.dl-btn-label").attr("title")),
+        size: $(dlinfo)
+          .find("ul.details")
+          .find("li > span")
+          .eq(0)
+          .text()
+          .trim(),
+        created:
+          new Date(
+            $(dlinfo).find("ul.details").find("li > span").eq(1).text().trim()
+          ) - 1,
+        descHeader: $(dlinfo).find("div.description > p").eq(0).text().trim(),
+        desc: $(dlinfo).find("div.description > p").eq(1).text().trim(),
+        media: $(button).find("a.popsok").attr("href"),
+        link: url,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 module.exports = {
   terabox,
-  drive
+  drive,
+  mediafire,
 };

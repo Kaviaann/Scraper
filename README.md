@@ -118,9 +118,15 @@ animeSearch("Boku No Hero Academia", (datas) => {
 | 22/05/24 |  tiktokUserPost  | Get Random Post Data From User                                     |
 | 26/05/24 |   animeCompany   | Search For Anime Company                                           |
 | 26/05/24 | animeCompanyInfo | Get all of the first result from animeCompany and get all infos    |
-| 27/05/24 |       igdl       | Get instagram link for media                                       |
+| 27/05/24 |       igDl       | Get instagram link for media                                       |
 | 27/05/24 |     igStalk      | Get all information from the given username                        |
 | 27/05/24 |     twitter      | Get twitter link for media ( Video Only )                          |
+| 15/06/24 |    githubUser    | Get github user info by username                                   |
+| 15/06/24 |   tiktokSlide    | Scrape for tiktok slideshow                                        |
+| 15/06/24 |   tiktokStalk    | Get tiktok user info by username                                   |
+| 15/06/24 |     terabox      | Get direct download link and file name                             |
+| 15/06/24 |      drive       | Get direct download link and other infos on drive link             |
+| 15/06/24 |    mediafire     | Get direct download link and other infos                           |
 
 <br>
 <br>
