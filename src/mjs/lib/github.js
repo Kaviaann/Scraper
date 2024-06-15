@@ -1,4 +1,9 @@
-import cheerio from 'cheerio'
+import cheerio from "cheerio";
+
+/**
+ * SCRAPED BY KAVIAANN
+ * FORBIDDEN TO SELL AND DELETE MY WM
+ */
 
 const githubUser = async (username) => {
   return new Promise(async (resolve, reject) => {
@@ -89,6 +94,4 @@ const githubUser = async (username) => {
   });
 };
 
-export {
-  githubUser
-}
+export { githubUser };

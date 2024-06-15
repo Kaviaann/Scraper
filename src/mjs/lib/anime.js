@@ -1,5 +1,10 @@
 import cheerio from "cheerio";
 
+/**
+ * SCRAPED BY KAVIAANN
+ * FORBIDDEN TO SELL AND DELETE MY WM
+ */
+
 const animeSearch = async (name, callback) => {
   const url = `https://www.mynimeku.com/?s=${encodeURI(name)}`;
 

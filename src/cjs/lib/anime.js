@@ -1,5 +1,10 @@
 const cheerio = require("cheerio");
 
+/**
+ * SCRAPED BY KAVIAANN
+ * FORBIDDEN TO SELL AND DELETE MY WM
+ */
+
 exports.animeSearch = async (name, callback) => {
   const url = `https://www.mynimeku.com/?s=${encodeURI(name)}`;
 

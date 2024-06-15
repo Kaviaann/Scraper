@@ -197,5 +197,5 @@ export interface InstagramStalk {
   status: "ok" | "idk";
 }
 
-export declare function igdl(url: URL): Promise<InstagramDownload>;
+export declare function igDl(url: URL): Promise<InstagramDownload[]>;
 export declare function igStalk(username: String): Promise<InstagramStalk>;

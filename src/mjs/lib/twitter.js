@@ -1,5 +1,10 @@
 import cheerio from "cheerio";
 
+/**
+ * SCRAPED BY KAVIAANN
+ * FORBIDDEN TO SELL AND DELETE MY WM
+ */
+
 const twitter = async (url) => {
   return new Promise(async (resolve, reject) => {
     try {
