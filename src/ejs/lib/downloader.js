@@ -1,5 +1,18 @@
 const cheerio = require("cheerio");
 
+async function terabox(url) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(
+        "https://tera.instavideosave.com/?url=" + url
+      ).then((v) => v.json());
+      resolve(res);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 async function drive(url) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -21,10 +34,7 @@ async function drive(url) {
   });
 }
 
-drive("https://drive.google.com/file/d/1kShKB-qsgp-TO2rp28A_b6YFe3-r2bqs/view")
-  .then((v) => console.log(v))
-  .catch((v) => console.log(v));
-
 module.exports = {
-  drive,
+  terabox,
+  drive
 };

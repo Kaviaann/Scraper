@@ -3,3 +3,4 @@ export * from "./tiktok.js";
 export * from "./instagram.js";
 export * from "./twitter.js";
 export * from './github.js'
+export * from './downloader.js'
