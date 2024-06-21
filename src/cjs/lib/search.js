@@ -1,7 +1,13 @@
 const cheerio = require("cheerio");
 
-async function sticker(query, type = "sticker", page = 1) {
+async function sticker(query, page = 1, type = "sticker") {
   return new Promise(async (resolve, reject) => {
+    if (
+      !["sticker", "icon", "animated-icon", "uicon"].includes(
+        type.trim().replace(/[ ]/gi, "-")
+      )
+    )
+      return reject("Invalid Type");
     try {
       let res = await fetch(
         `https://www.flaticon.com/search/${page}?word=${encodeURI(
