@@ -1,24 +1,5 @@
-const cheerio = require("cheerio");
+import cheerio from "cheerio";
 const BASE_URL = "https://genius.com";
-
-/**
- * SCRAPED BY KAVIAN
- * FORBIDDEN TO SELL OR DELETE MY WM
- */
-
-async function geniusSearch(query) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const res = await fetch(`${BASE_URL}/search?q=${encodeURI(query)}`).then(
-        (v) => v.text()
-      );
-      const $ = cheerio.load(res);
-      console.log(res);
-    } catch (e) {
-      reject(e);
-    }
-  });
-}
 
 async function geniusLyric(title, artist) {
   return new Promise(async (resolve, reject) => {
@@ -28,8 +9,8 @@ async function geniusLyric(title, artist) {
         "-"
       )}-lyrics`;
       let res = await fetch(url);
-      if(!res.ok) return reject("Lyric Not Found")
-      res = await res.text()
+      if (!res.ok) return reject("Lyric Not Found");
+      res = await res.text();
       const $ = cheerio.load(res);
       let data = {
         title: "",
@@ -115,6 +96,4 @@ async function geniusLyric(title, artist) {
   });
 }
 
-module.exports = {
-  geniusLyrics,
-};
+export { geniusLyric };
