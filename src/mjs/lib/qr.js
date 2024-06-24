@@ -1,6 +1,7 @@
-const qrcode = require("qrcode");
-const jimp = require("jimp");
-const reader = new (require("qrcode-reader"))();
+import qrcode from "qrcode";
+import jimp from "jimp";
+import Reader from "qrcode-reader";
+const reader = new Reader();
 
 async function createQr(query) {
   return new Promise(async (resolve, reject) => {
@@ -28,7 +29,4 @@ async function readQr(buffer) {
   });
 }
 
-module.exports = {
-  createQr,
-  readQr,
-};
+export { createQr, readQr };
