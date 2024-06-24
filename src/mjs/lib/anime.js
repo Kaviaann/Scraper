@@ -5,7 +5,7 @@ import cheerio from "cheerio";
  * FORBIDDEN TO SELL AND DELETE MY WM
  */
 
-const animeSearch = async (name, callback) => {
+async function animeSearch(name, callback) {
   const url = `https://www.mynimeku.com/?s=${encodeURI(name)}`;
 
   const response = await fetch(url);
@@ -17,6 +17,7 @@ const animeSearch = async (name, callback) => {
   const content = $(".flexbox2-content");
 
   const datas = [];
+
   // console.log(content)
 
   new Promise(async (res) => {
@@ -120,9 +121,9 @@ const animeSearch = async (name, callback) => {
   });
 
   callback(datas);
-};
+}
 
-const animeCharacter = async (name, callback) => {
+async function animeCharacter(name, callback) {
   const res = await fetch(
     `https://myanimelist.net/character.php?cat=character&q=${encodeURI(name)}`,
     {
@@ -204,9 +205,9 @@ const animeCharacter = async (name, callback) => {
   }
 
   callback(datas);
-};
+}
 
-const animeCompany = async (name) => {
+async function animeCompany(name) {
   return new Promise(async (resolve, reject) => {
     const res = await fetch("https://myanimelist.net/company?q=" + name).then(
       (v) => v.text()
@@ -249,9 +250,9 @@ const animeCompany = async (name) => {
     }
     resolve(datas);
   });
-};
+}
 
-const animeCompanyInfo = async (name) => {
+async function animeCompanyInfo(name) {
   return new Promise(async (resolve, reject) => {
     animeCompany(name)
       .then(async (v) => {
@@ -516,6 +517,6 @@ const animeCompanyInfo = async (name) => {
       })
       .catch((v) => reject(v));
   });
-};
+}
 
 export { animeCharacter, animeCompany, animeCompanyInfo, animeSearch };

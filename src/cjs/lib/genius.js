@@ -28,8 +28,8 @@ async function geniusLyric(title, artist) {
         "-"
       )}-lyrics`;
       let res = await fetch(url);
-      if(!res.ok) return reject("Lyric Not Found")
-      res = await res.text()
+      if (!res.ok) return reject("Lyric Not Found");
+      res = await res.text();
       const $ = cheerio.load(res);
       let data = {
         title: "",
@@ -116,5 +116,5 @@ async function geniusLyric(title, artist) {
 }
 
 module.exports = {
-  geniusLyrics,
+  geniusLyric,
 };

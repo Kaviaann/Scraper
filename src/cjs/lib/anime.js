@@ -5,7 +5,7 @@ const cheerio = require("cheerio");
  * FORBIDDEN TO SELL AND DELETE MY WM
  */
 
-exports.animeSearch = async (name, callback) => {
+async function animeSearch(name, callback) {
   const url = `https://www.mynimeku.com/?s=${encodeURI(name)}`;
 
   const response = await fetch(url);
@@ -121,9 +121,9 @@ exports.animeSearch = async (name, callback) => {
   });
 
   callback(datas);
-};
+}
 
-exports.animeCharacter = async (name, callback) => {
+async function animeCharacter(name, callback) {
   const res = await fetch(
     `https://myanimelist.net/character.php?cat=character&q=${encodeURI(name)}`,
     {
@@ -205,9 +205,9 @@ exports.animeCharacter = async (name, callback) => {
   }
 
   callback(datas);
-};
+}
 
-exports.animeCompany = async (name) => {
+async function animeCompany(name) {
   return new Promise(async (resolve, reject) => {
     const res = await fetch("https://myanimelist.net/company?q=" + name).then(
       (v) => v.text()
@@ -250,11 +250,11 @@ exports.animeCompany = async (name) => {
     }
     resolve(datas);
   });
-};
+}
 
-exports.animeCompanyInfo = async (name) => {
+async function animeCompanyInfo(name) {
   return new Promise(async (resolve, reject) => {
-    this.animeCompany(name)
+    animeCompany(name)
       .then(async (v) => {
         const res = await fetch(v[0].link).then((v) => v.text());
         const $ = cheerio.load(res);
@@ -517,4 +517,42 @@ exports.animeCompanyInfo = async (name) => {
       })
       .catch((v) => reject(v));
   });
+}
+
+async function mangaSearch(query) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(
+        `https://myanimelist.net/manga.php?q=${encodeURI(query)}`
+      ).then((v) => v.text());
+      const $ = cheerio.load(res);
+      const data = [];
+      $("div#content")
+        .find("div.list > table > tbody")
+        .children("tr")
+        .slice(1)
+        .each((i, el) => {
+          const manga = {
+            title: $(el).find("strong").text().trim(),
+            link: $(el).find("div.picSurround > a").attr("href"),
+            thumbnail: $(el)
+              .find("div.picSurround > a > img")
+              .attr("data-srcset"),
+          };
+          console.log(manga);
+          data.push(manga);
+        });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+mangaSearch("kaijuu");
+
+module.exports = {
+  animeSearch,
+  animeCharacter,
+  animeCompany,
+  animeCompanyInfo,
 };
