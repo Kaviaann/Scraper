@@ -135,4 +135,18 @@ async function sticker(query, type = "sticker", page = 1) {
   });
 }
 
-export { sticker, geniusLyric };
+async function webArchive(query) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await fetch(
+        "https://archive.org/wayback/available?" +
+          new URLSearchParams({ url: query })
+      ).then((v) => v.json());
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export { sticker, geniusLyric, webArchive };

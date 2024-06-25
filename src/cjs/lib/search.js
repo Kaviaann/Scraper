@@ -141,7 +141,22 @@ async function geniusLyric(title, artist) {
   });
 }
 
+async function webArchive(query) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await fetch(
+        "https://archive.org/wayback/available?" +
+          new URLSearchParams({ url: query })
+      ).then((v) => v.json());
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 module.exports = {
   sticker,
   geniusLyric,
+  webArchive,
 };

@@ -45,7 +45,39 @@ export interface IStickerResponse {
   page: number;
   stickers: ISticker[];
 }
+export declare interface IGeniusLyric {
+  title: String;
+  about: String;
+  image: String;
+  artist: String;
+  artistLink: String;
+  track: String;
+  album: String;
+  producer: String;
+  producerLink: String;
+  url: String;
+  lyric: String[];
+  tags: {
+    name: String;
+    url: String;
+  }[];
+}
 
 export declare function sticker(query: String): Promise<IStickerResponse>;
 export declare function createQr(query: String): Promise<Buffer>;
 export declare function readQr(buffer: Buffer): Promise<any>;
+export declare function geniusLyric(
+  title: String,
+  artist: String
+): Promise<IGeniusLyric>;
+export declare function webArchive(query: String): Promise<{
+  url: String;
+  archived_snapshot: {
+    clotest: {
+      status: String;
+      available: Boolean;
+      url: String;
+      timestamp: String;
+    };
+  };
+}>;
