@@ -252,270 +252,270 @@ async function animeCompany(name) {
   });
 }
 
-async function animeCompanyInfo(name) {
+async function animeCompanyInfo(url) {
   return new Promise(async (resolve, reject) => {
-    animeCompany(name)
-      .then(async (v) => {
-        const res = await fetch(v[0].link).then((v) => v.text());
-        const $ = cheerio.load(res);
-        const data = {
-          name: v[0].name,
-          logo: "",
-          create_time: 0,
-          favorite: "",
-          share: [],
-          infos: {},
-          news: [],
-          animes: [],
-        };
-        for (let content of $("#content").children()) {
-          switch ($(content).attr("class")) {
-            case "content-left": {
-              $(content)
-                .children()
-                .each((i, el) => {
-                  switch ($(el).attr("class")) {
-                    case "logo": {
-                      data.logo = $(el).children("img").attr("data-src");
-                      break;
-                    }
+    try {
+      if (!/myanimelist\.net\/anime\/producer/gi.test(url))
+        reject("Invalid URL");
+      const res = await fetch(url).then((v) => v.text());
+      const $ = cheerio.load(res);
+      const data = {
+        name: url.split("/").pop(),
+        logo: "",
+        create_time: 0,
+        favorite: "",
+        share: [],
+        infos: {},
+        news: [],
+        animes: [],
+      };
+      for (let content of $("#content").children()) {
+        switch ($(content).attr("class")) {
+          case "content-left": {
+            $(content)
+              .children()
+              .each((i, el) => {
+                switch ($(el).attr("class")) {
+                  case "logo": {
+                    data.logo = $(el).children("img").attr("data-src");
+                    break;
+                  }
 
-                    case "mb16": {
-                      if ($(el).children().length === 1) {
+                  case "mb16": {
+                    if ($(el).children().length === 1) {
+                      $(el)
+                        .children()
+                        .children("a")
+                        .each((i, el) => {
+                          const attr = $(el).attr();
+                          data.share.push({
+                            type: attr["data-ga-network"],
+                            link: attr["href"],
+                          });
+                        });
+                    } else {
+                      $(el).children((i, spaceit) => {
+                        const res = spaceit.children
+                          .map((v, i, arr) => {
+                            return `${$(v).text()}`
+                              .trim()
+                              .replace(/[\n:]/gi, "");
+                          })
+                          .filter((v) => v);
+                        const type = res[0].toLowerCase();
+                        if (type === "established")
+                          data.create_time = new Date(res[1]) - 1;
+                        else if (type === "member favorites")
+                          data.favorite = res[1];
+                        else if (res.length == 1) data.infos.main = res[0];
+                        else {
+                          data.infos.from = res[0];
+                        }
+                      });
+                    }
+                    break;
+                  }
+                }
+              });
+            break;
+          }
+
+          case "content-right": {
+            $(content)
+              .children()
+              .each((i, el) => {
+                switch (`${$(el).attr("class")}`.split(" ")[0]) {
+                  case "news-list": {
+                    const news = {
+                      title: "",
+                      thumbnail: "",
+                      snippets: "",
+                      link: "",
+                      info: {
+                        author: "",
+                        author_link: "",
+                        create_time: 0,
+                        forum: "",
+                        tags: [],
+                      },
+                    };
+                    $(el)
+                      .children()
+                      .each((i, el) => {
                         $(el)
                           .children()
-                          .children("a")
                           .each((i, el) => {
-                            const attr = $(el).attr();
-                            data.share.push({
-                              type: attr["data-ga-network"],
-                              link: attr["href"],
-                            });
-                          });
-                      } else {
-                        $(el).children((i, spaceit) => {
-                          const res = spaceit.children
-                            .map((v, i, arr) => {
-                              return `${$(v).text()}`
-                                .trim()
-                                .replace(/[\n:]/gi, "");
-                            })
-                            .filter((v) => v);
-                          const type = res[0].toLowerCase();
-                          if (type === "established")
-                            data.create_time = new Date(res[1]) - 1;
-                          else if (type === "member favorites")
-                            data.favorite = res[1];
-                          else if (res.length == 1) data.infos.main = res[0];
-                          else {
-                            data.infos.from = res[0];
-                          }
-                        });
-                      }
-                      break;
-                    }
-                  }
-                });
-              break;
-            }
+                            switch (el.name) {
+                              case "a": {
+                                news.link = el.attribs.href;
+                                news.thumbnail = `${$(el)
+                                  .children("img")
+                                  .attr("src")}`
+                                  .replace(/r\/\w*\//gi, "")
+                                  .replace(/\?\w*=[\w\d]*/gi, "");
+                                break;
+                              }
 
-            case "content-right": {
-              $(content)
-                .children()
-                .each((i, el) => {
-                  switch (`${$(el).attr("class")}`.split(" ")[0]) {
-                    case "news-list": {
-                      const news = {
-                        title: "",
-                        thumbnail: "",
-                        snippets: "",
-                        link: "",
-                        info: {
-                          author: "",
-                          author_link: "",
-                          create_time: 0,
-                          forum: "",
-                          tags: [],
-                        },
-                      };
-                      $(el)
-                        .children()
-                        .each((i, el) => {
-                          $(el)
-                            .children()
-                            .each((i, el) => {
-                              switch (el.name) {
-                                case "a": {
-                                  news.link = el.attribs.href;
-                                  news.thumbnail = `${$(el)
-                                    .children("img")
-                                    .attr("src")}`
-                                    .replace(/r\/\w*\//gi, "")
-                                    .replace(/\?\w*=[\w\d]*/gi, "");
-                                  break;
-                                }
+                              case "div": {
+                                $(el)
+                                  .children()
+                                  .each((i, el) => {
+                                    switch (el.name) {
+                                      case "p": {
+                                        news.title = $(el).children().text();
+                                        break;
+                                      }
 
-                                case "div": {
-                                  $(el)
-                                    .children()
-                                    .each((i, el) => {
-                                      switch (el.name) {
-                                        case "p": {
-                                          news.title = $(el).children().text();
-                                          break;
-                                        }
-
-                                        case "div": {
-                                          if ($(el).attr("class") === "text")
-                                            news.snippets = `${$(
-                                              el
-                                            ).text()}`.trim();
-                                          else {
-                                            $(el).children((i, el) => {
-                                              const create_date = el.children
-                                                .filter(
-                                                  (v) =>
-                                                    v.type === "text" &&
-                                                    v.data
-                                                      .replace(/[\n]/gi, "")
-                                                      .trim()
-                                                )
-                                                .map((v) => {
-                                                  const date = v.data
+                                      case "div": {
+                                        if ($(el).attr("class") === "text")
+                                          news.snippets = `${$(
+                                            el
+                                          ).text()}`.trim();
+                                        else {
+                                          $(el).children((i, el) => {
+                                            const create_date = el.children
+                                              .filter(
+                                                (v) =>
+                                                  v.type === "text" &&
+                                                  v.data
                                                     .replace(/[\n]/gi, "")
-                                                    .split("by")[0]
-                                                    .trim();
-                                                  const year =
-                                                    new Date().getFullYear();
-                                                  return (
-                                                    new Date(
-                                                      `${
-                                                        date.split(",")[0]
-                                                      } ${year}, ${
-                                                        date.split(",")[1]
-                                                      }`
-                                                    ) - 1
-                                                  );
-                                                })
-                                                .filter((v) => v)[0];
-                                              if (create_date) {
-                                                news.info.create_time =
-                                                  create_date;
-                                              }
-                                              $(el)
-                                                .children("a")
-                                                .each((i, el) => {
-                                                  const link =
-                                                    $(el).attr("href");
-                                                  switch (link.split("/")[3]) {
-                                                    case "profile": {
-                                                      news.info.author_link =
-                                                        link;
-                                                      news.info.author =
-                                                        link.split("/")[4];
-                                                      break;
-                                                    }
-
-                                                    case "forum": {
-                                                      news.info.forum = link;
-                                                      break;
-                                                    }
-
-                                                    case "news": {
-                                                      if (
-                                                        link.split("/").length >
-                                                        4
-                                                      ) {
-                                                        const tag = link
-                                                          .split("/")
-                                                          .pop();
-                                                        news.info.tags.push({
-                                                          type: tag,
-                                                          link: link,
-                                                        });
-                                                      }
-                                                      break;
-                                                    }
+                                                    .trim()
+                                              )
+                                              .map((v) => {
+                                                const date = v.data
+                                                  .replace(/[\n]/gi, "")
+                                                  .split("by")[0]
+                                                  .trim();
+                                                const year =
+                                                  new Date().getFullYear();
+                                                return (
+                                                  new Date(
+                                                    `${
+                                                      date.split(",")[0]
+                                                    } ${year}, ${
+                                                      date.split(",")[1]
+                                                    }`
+                                                  ) - 1
+                                                );
+                                              })
+                                              .filter((v) => v)[0];
+                                            if (create_date) {
+                                              news.info.create_time =
+                                                create_date;
+                                            }
+                                            $(el)
+                                              .children("a")
+                                              .each((i, el) => {
+                                                const link = $(el).attr("href");
+                                                switch (link.split("/")[3]) {
+                                                  case "profile": {
+                                                    news.info.author_link =
+                                                      link;
+                                                    news.info.author =
+                                                      link.split("/")[4];
+                                                    break;
                                                   }
-                                                });
-                                            });
-                                          }
+
+                                                  case "forum": {
+                                                    news.info.forum = link;
+                                                    break;
+                                                  }
+
+                                                  case "news": {
+                                                    if (
+                                                      link.split("/").length > 4
+                                                    ) {
+                                                      const tag = link
+                                                        .split("/")
+                                                        .pop();
+                                                      news.info.tags.push({
+                                                        type: tag,
+                                                        link: link,
+                                                      });
+                                                    }
+                                                    break;
+                                                  }
+                                                }
+                                              });
+                                          });
                                         }
                                       }
-                                    });
-                                  break;
-                                }
+                                    }
+                                  });
+                                break;
                               }
-                            });
-                        });
+                            }
+                          });
+                      });
 
-                      data.news.push(news);
-                      break;
-                    }
-
-                    case "js-categories-seasonal": {
-                      $(el)
-                        .children()
-                        .each((i, el) => {
-                          const anime = {
-                            title: "",
-                            thumbnail: "",
-                            link: "",
-                            category: "",
-                            stars: "",
-                            users: "",
-                          };
-                          $(el)
-                            .children()
-                            .each((i, el) => {
-                              switch ($(el).attr("class")) {
-                                case "image": {
-                                  anime.link = $(el).children().attr("href");
-                                  anime.thumbnail = $(el)
-                                    .children()
-                                    .children()
-                                    .attr("data-src");
-                                  break;
-                                }
-
-                                case "title": {
-                                  anime.title = $(el).children().text();
-                                  break;
-                                }
-
-                                case "category": {
-                                  anime.category = $(el).text();
-                                  break;
-                                }
-
-                                case "widget": {
-                                  $(el)
-                                    .children()
-                                    .each((i, el) => {
-                                      const type = el.attribs.class;
-                                      for (let sa of el.children.filter(
-                                        (v) => v.type === "text"
-                                      )) {
-                                        anime[type] = sa.data;
-                                      }
-                                    });
-                                  break;
-                                }
-                              }
-                            });
-                          data.animes.push(anime);
-                        });
-                      break;
-                    }
+                    data.news.push(news);
+                    break;
                   }
-                });
-              break;
-            }
+
+                  case "js-categories-seasonal": {
+                    $(el)
+                      .children()
+                      .each((i, el) => {
+                        const anime = {
+                          title: "",
+                          thumbnail: "",
+                          link: "",
+                          category: "",
+                          stars: "",
+                          users: "",
+                        };
+                        $(el)
+                          .children()
+                          .each((i, el) => {
+                            switch ($(el).attr("class")) {
+                              case "image": {
+                                anime.link = $(el).children().attr("href");
+                                anime.thumbnail = $(el)
+                                  .children()
+                                  .children()
+                                  .attr("data-src");
+                                break;
+                              }
+
+                              case "title": {
+                                anime.title = $(el).children().text();
+                                break;
+                              }
+
+                              case "category": {
+                                anime.category = $(el).text();
+                                break;
+                              }
+
+                              case "widget": {
+                                $(el)
+                                  .children()
+                                  .each((i, el) => {
+                                    const type = el.attribs.class;
+                                    for (let sa of el.children.filter(
+                                      (v) => v.type === "text"
+                                    )) {
+                                      anime[type] = sa.data;
+                                    }
+                                  });
+                                break;
+                              }
+                            }
+                          });
+                        data.animes.push(anime);
+                      });
+                    break;
+                  }
+                }
+              });
+            break;
           }
         }
-        resolve(data);
-      })
-      .catch((v) => reject(v));
+      }
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
   });
 }
 
@@ -523,7 +523,7 @@ async function mangaSearch(query) {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await fetch(
-        `https://myanimelist.net/manga.php?q=${encodeURI(query)}`
+        `https://myanimelist.net/manga.php?${new URLSearchParams({ q: query })}`
       ).then((v) => v.text());
       const $ = cheerio.load(res);
       const data = [];
@@ -532,12 +532,27 @@ async function mangaSearch(query) {
         .children("tr")
         .slice(1)
         .each((i, el) => {
+          const at = $(el).find("td.ac");
           const manga = {
             title: $(el).find("strong").text().trim(),
+            desc: $(el).find("div.pt4").text().trim(),
+            // .replace(/read more/gi, "")
+            // .replace(/\./gi, "") + "...",
+            id: $(el)
+              .find("div.picSurround > a")
+              .attr("id")
+              .replace(/sarea|[^\d]/gi, ""),
             link: $(el).find("div.picSurround > a").attr("href"),
             thumbnail: $(el)
               .find("div.picSurround > a > img")
-              .attr("data-srcset"),
+              .attr("data-srcset")
+              .split(" ")[2]
+              .split("?")[0]
+              .replace(/\/r\/\d+x\d+/gi, ""),
+            type: $(at).eq(0).text().trim(),
+            volume: $(at).eq(1).text().trim(),
+            score: $(at).eq(2).text().trim(),
+            member: $(at).eq(3).text().trim() || 0,
           };
           console.log(manga);
           data.push(manga);
@@ -548,7 +563,70 @@ async function mangaSearch(query) {
   });
 }
 
-mangaSearch("kaijuu");
+async function manga(url) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!/myanimelist\.net\/manga/gi.test(url)) reject("Invalid URL");
+      const res = await fetch(url).then((v) => v.text());
+      const $ = cheerio.load(res);
+      const BASE_URL = "https://myanimelist.net";
+      const con = $("div#content").find("tr").eq(0).find("td");
+      const atr = $(con).eq(0).find("div.leftside");
+      const dec = $(con).eq(1);
+      const data = {
+        title: $("span.h1-title")
+          .find('span[itemprop="name"]')
+          .contents()
+          .eq(0)
+          .text(),
+        attr: $(atr)
+          .find('div[class="spaceit_pad"]')
+          .map((i, el) => {
+            const ds = {};
+            $(el)
+              .contents()
+              .each((i, el) => {
+                switch (el.name) {
+                  case "span": {
+                    if (
+                      $(el).attr("class") !== "dark_text" ||
+                      $(el).attr("itemprop") !== "genre"
+                    ) {
+                      ds.type = $(el).text().trim();
+                    } else {
+                      ds.data = $(el).text().trim();
+                    }
+                    break;
+                  }
+
+                  case "a": {
+                    ds.link = ds.link || [];
+                    ds.link.push({
+                      url: BASE_URL + $(el).attr("href"),
+                      data: $(el).text().trim(),
+                    });
+                    break;
+                  }
+
+                  case undefined: {
+                    if (!el.type === "text" || !$(el).text().trim()) return;
+                    ds.text = $(el).text().trim().replace(",", "");
+                    break;
+                  }
+                }
+              });
+            console.log(ds);
+          })
+          .get(),
+      };
+      console.log(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+manga("https://myanimelist.net/manga/127907/Kaijuu_8-gou");
 
 module.exports = {
   animeSearch,
