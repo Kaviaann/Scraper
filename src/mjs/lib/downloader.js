@@ -108,4 +108,4 @@ module.exports = {
   drive,
   mediafire,
   snackVideo,
-};
+}

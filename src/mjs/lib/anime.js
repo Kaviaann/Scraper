@@ -17,9 +17,7 @@ async function animeSearch(name, callback) {
   const content = $(".flexbox2-content");
 
   const datas = [];
-
-  // console.log(content)
-
+  
   new Promise(async (res) => {
     for (let box of content) {
       const data = {
@@ -517,6 +515,7 @@ async function animeCompanyInfo(name) {
       })
       .catch((v) => reject(v));
   });
+  
 }
 
 async function mangaSearch(query) {
