@@ -9,7 +9,7 @@
   },
   "exports": {
     ".": {
-      "types": "./src/@types",
+      "types" : "./src/@types",
       "import": "./src/mjs/index.js",
       "require": "./src/cjs/index.js"
     }

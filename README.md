@@ -146,4 +146,4 @@ animeSearch("Boku No Hero Academia", (datas) => {
 | characterInfo | All Information About The Given Character        |
 |  tiktokTrend  | Check Tiktok Trend On Various Region             |
 |  tiktokUser   | See All Of The User Info                         |
-|  githubRepo   | See All The Information On The Github Repository |
+|  githubRepo   | See All The Information On The Github Repository | 
