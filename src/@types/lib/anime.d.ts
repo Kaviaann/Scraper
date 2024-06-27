@@ -79,6 +79,41 @@ export interface CompanyInfo {
   animes: CompanyAnimes[];
 }
 
+export declare interface IMangaSearch {
+  title: String;
+  desc: String;
+  id: String;
+  link: String;
+  thumbnail: String;
+  type: String;
+  volume: String;
+  score: String;
+  member: String;
+}
+
+export declare interface IManga {
+  title: String;
+  synops: String;
+  thumbnail: String;
+  pictures: String;
+  score: String;
+  attr: {
+    type: String;
+    text?: String;
+    data?: String | String[];
+    link?: {
+      url: String;
+      data: String;
+    }[];
+  }[];
+  character: {
+    name: String;
+    role: String;
+    image: String;
+    link: String;
+  }[];
+}
+
 export declare function animeSearch(
   name: string,
   callback: (datas: AnimeData[]) => Promise<void>
@@ -89,3 +124,4 @@ export declare function animeCharacter(
 ): Promise<void>;
 export declare function animeCompany(name: string): Promise<CompanyData>;
 export declare function animeCompanyInfo(name: string): Promise<CompanyInfo>;
+export declare function mangaSearch(query: String): Promise<IMangaSearch[]>;
