@@ -1,6 +1,5 @@
 /* <=====  This is an example for CommonJS  =====> */
-import scraper from "../src/mjs/index.js";
-const { animeSearch } = scraper;
+import { animeSearch } from "../src/mjs/index.js";
 
 animeSearch("Evangelion", (datas) => {
   if (!Buffer.compare(Buffer.from(datas), Buffer.from([])))

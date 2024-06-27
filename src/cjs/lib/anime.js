@@ -554,9 +554,10 @@ async function mangaSearch(query) {
             score: $(at).eq(2).text().trim(),
             member: $(at).eq(3).text().trim() || 0,
           };
-          console.log(manga);
           data.push(manga);
         });
+
+        resolve(data)
     } catch (e) {
       reject(e);
     }
@@ -570,15 +571,24 @@ async function manga(url) {
       const res = await fetch(url).then((v) => v.text());
       const $ = cheerio.load(res);
       const BASE_URL = "https://myanimelist.net";
-      const con = $("div#content").find("tr").eq(0).find("td");
+      const con = $("div#content").find("tr").eq(0).children();
       const atr = $(con).eq(0).find("div.leftside");
-      const dec = $(con).eq(1);
+      const dec = $(con)
+        .eq(1)
+        .find("div")
+        .find("table")
+        .find("tr")
+        .find("td.pb24");
       const data = {
         title: $("span.h1-title")
           .find('span[itemprop="name"]')
           .contents()
           .eq(0)
           .text(),
+        synops: $(dec).find('span[itemprop="description"]').text().trim(),
+        thumbnail: $(atr).find("a > img").attr("data-src"),
+        pictures: $(atr).find("a").attr("href"),
+        score: $(dec).eq(0).find("div.score-label").text().trim(),
         attr: $(atr)
           .find('div[class="spaceit_pad"]')
           .map((i, el) => {
@@ -588,13 +598,13 @@ async function manga(url) {
               .each((i, el) => {
                 switch (el.name) {
                   case "span": {
-                    if (
-                      $(el).attr("class") !== "dark_text" ||
-                      $(el).attr("itemprop") !== "genre"
-                    ) {
-                      ds.type = $(el).text().trim();
+                    if ($(el).attr("class") === "dark_text")
+                      return (ds.type = $(el).text().trim().replace(":", ""));
+                    else if (!ds.data) return (ds.data = $(el).text().trim());
+                    else if (ds.data && typeof ds.data !== "object") {
+                      ds.data = [ds.data, $(el).text().trim()];
                     } else {
-                      ds.data = $(el).text().trim();
+                      ds.data.push($(el).text().trim());
                     }
                     break;
                   }
@@ -610,27 +620,56 @@ async function manga(url) {
 
                   case undefined: {
                     if (!el.type === "text" || !$(el).text().trim()) return;
-                    ds.text = $(el).text().trim().replace(",", "");
+                    const text = $(el).text().trim().replace(",", "");
+                    text ? (ds.text = text) : "";
                     break;
                   }
                 }
               });
-            console.log(ds);
+            return ds;
           })
           .get(),
+        character: [],
       };
-      console.log(data);
+
+      $(dec)
+        .eq(3)
+        .find("div.detail-characters-list")
+        .children("div")
+        .each((i, el) => {
+          $(el)
+            .find("table")
+            .each((i, el) => {
+              const char = {};
+              const td = $(el).find("td");
+              char.name = $(td)
+                .find('td[class="borderClass"] > a')
+                .text()
+                .trim();
+              char.role = $(td).find("small").text().trim();
+              char.link = $(td)
+                .find('td[class="borderClass"] > a')
+                .attr("href");
+              char.image = $(td)
+                .find("div.picSurround > a > img")
+                .attr("data-src")
+                .split("?")[0]
+                .replace(/\/r\/\d+x\d+/gi, "");
+              data.character.push(char);
+            });
+        });
+      resolve(data);
     } catch (e) {
       reject(e);
     }
   });
 }
 
-manga("https://myanimelist.net/manga/127907/Kaijuu_8-gou");
-
 module.exports = {
   animeSearch,
   animeCharacter,
   animeCompany,
   animeCompanyInfo,
+  mangaSearch,
+  manga
 };
