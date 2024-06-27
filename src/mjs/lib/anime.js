@@ -5,7 +5,7 @@ import cheerio from "cheerio";
  * FORBIDDEN TO SELL AND DELETE MY WM
  */
 
-const animeSearch = async (name, callback) => {
+async function animeSearch(name, callback) {
   const url = `https://www.mynimeku.com/?s=${encodeURI(name)}`;
 
   const response = await fetch(url);
@@ -17,8 +17,7 @@ const animeSearch = async (name, callback) => {
   const content = $(".flexbox2-content");
 
   const datas = [];
-  // console.log(content)
-
+  
   new Promise(async (res) => {
     for (let box of content) {
       const data = {
@@ -120,9 +119,9 @@ const animeSearch = async (name, callback) => {
   });
 
   callback(datas);
-};
+}
 
-const animeCharacter = async (name, callback) => {
+async function animeCharacter(name, callback) {
   const res = await fetch(
     `https://myanimelist.net/character.php?cat=character&q=${encodeURI(name)}`,
     {
@@ -204,9 +203,9 @@ const animeCharacter = async (name, callback) => {
   }
 
   callback(datas);
-};
+}
 
-const animeCompany = async (name) => {
+async function animeCompany(name) {
   return new Promise(async (resolve, reject) => {
     const res = await fetch("https://myanimelist.net/company?q=" + name).then(
       (v) => v.text()
@@ -249,9 +248,9 @@ const animeCompany = async (name) => {
     }
     resolve(datas);
   });
-};
+}
 
-const animeCompanyInfo = async (name) => {
+async function animeCompanyInfo(name) {
   return new Promise(async (resolve, reject) => {
     animeCompany(name)
       .then(async (v) => {
@@ -516,6 +515,160 @@ const animeCompanyInfo = async (name) => {
       })
       .catch((v) => reject(v));
   });
-};
+  
+}
 
-export { animeCharacter, animeCompany, animeCompanyInfo, animeSearch };
+async function mangaSearch(query) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(
+        `https://myanimelist.net/manga.php?${new URLSearchParams({ q: query })}`
+      ).then((v) => v.text());
+      const $ = cheerio.load(res);
+      const data = [];
+      $("div#content")
+        .find("div.list > table > tbody")
+        .children("tr")
+        .slice(1)
+        .each((i, el) => {
+          const at = $(el).find("td.ac");
+          const manga = {
+            title: $(el).find("strong").text().trim(),
+            desc: $(el).find("div.pt4").text().trim(),
+            // .replace(/read more/gi, "")
+            // .replace(/\./gi, "") + "...",
+            id: $(el)
+              .find("div.picSurround > a")
+              .attr("id")
+              .replace(/sarea|[^\d]/gi, ""),
+            link: $(el).find("div.picSurround > a").attr("href"),
+            thumbnail: $(el)
+              .find("div.picSurround > a > img")
+              .attr("data-srcset")
+              .split(" ")[2]
+              .split("?")[0]
+              .replace(/\/r\/\d+x\d+/gi, ""),
+            type: $(at).eq(0).text().trim(),
+            volume: $(at).eq(1).text().trim(),
+            score: $(at).eq(2).text().trim(),
+            member: $(at).eq(3).text().trim() || 0,
+          };
+          data.push(manga);
+        });
+
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+async function manga(url) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!/myanimelist\.net\/manga/gi.test(url)) reject("Invalid URL");
+      const res = await fetch(url).then((v) => v.text());
+      const $ = cheerio.load(res);
+      const BASE_URL = "https://myanimelist.net";
+      const con = $("div#content").find("tr").eq(0).children();
+      const atr = $(con).eq(0).find("div.leftside");
+      const dec = $(con)
+        .eq(1)
+        .find("div")
+        .find("table")
+        .find("tr")
+        .find("td.pb24");
+      const data = {
+        title: $("span.h1-title")
+          .find('span[itemprop="name"]')
+          .contents()
+          .eq(0)
+          .text(),
+        synops: $(dec).find('span[itemprop="description"]').text().trim(),
+        thumbnail: $(atr).find("a > img").attr("data-src"),
+        pictures: $(atr).find("a").attr("href"),
+        score: $(dec).eq(0).find("div.score-label").text().trim(),
+        attr: $(atr)
+          .find('div[class="spaceit_pad"]')
+          .map((i, el) => {
+            const ds = {};
+            $(el)
+              .contents()
+              .each((i, el) => {
+                switch (el.name) {
+                  case "span": {
+                    if ($(el).attr("class") === "dark_text")
+                      return (ds.type = $(el).text().trim().replace(":", ""));
+                    else if (!ds.data) return (ds.data = $(el).text().trim());
+                    else if (ds.data && typeof ds.data !== "object") {
+                      ds.data = [ds.data, $(el).text().trim()];
+                    } else {
+                      ds.data.push($(el).text().trim());
+                    }
+                    break;
+                  }
+
+                  case "a": {
+                    ds.link = ds.link || [];
+                    ds.link.push({
+                      url: BASE_URL + $(el).attr("href"),
+                      data: $(el).text().trim(),
+                    });
+                    break;
+                  }
+
+                  case undefined: {
+                    if (!el.type === "text" || !$(el).text().trim()) return;
+                    const text = $(el).text().trim().replace(",", "");
+                    text ? (ds.text = text) : "";
+                    break;
+                  }
+                }
+              });
+            return ds;
+          })
+          .get(),
+        character: [],
+      };
+
+      $(dec)
+        .eq(3)
+        .find("div.detail-characters-list")
+        .children("div")
+        .each((i, el) => {
+          $(el)
+            .find("table")
+            .each((i, el) => {
+              const char = {};
+              const td = $(el).find("td");
+              char.name = $(td)
+                .find('td[class="borderClass"] > a')
+                .text()
+                .trim();
+              char.role = $(td).find("small").text().trim();
+              char.link = $(td)
+                .find('td[class="borderClass"] > a')
+                .attr("href");
+              char.image = $(td)
+                .find("div.picSurround > a > img")
+                .attr("data-src")
+                .split("?")[0]
+                .replace(/\/r\/\d+x\d+/gi, "");
+              data.character.push(char);
+            });
+        });
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export {
+  animeCharacter,
+  animeCompany,
+  animeCompanyInfo,
+  animeSearch,
+  mangaSearch,
+  manga,
+};

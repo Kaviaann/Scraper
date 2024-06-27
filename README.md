@@ -121,17 +121,21 @@ animeSearch("Boku No Hero Academia", (datas) => {
 | 27/05/24 |       igDl       | Get instagram link for media                                       |
 | 27/05/24 |     igStalk      | Get all information from the given username                        |
 | 27/05/24 |     twitter      | Get twitter link for media ( Video Only )                          |
-<<<<<<< HEAD
-| 12/06/24 |     githubUser   | Get Info About The Given Github User Infos                         |
-=======
 | 15/06/24 |    githubUser    | Get github user info by username                                   |
 | 15/06/24 |   tiktokSlide    | Scrape for tiktok slideshow                                        |
 | 15/06/24 |   tiktokStalk    | Get tiktok user info by username                                   |
 | 15/06/24 |     terabox      | Get direct download link and file name                             |
 | 15/06/24 |      drive       | Get direct download link and other infos on drive link             |
 | 15/06/24 |    mediafire     | Get direct download link and other infos                           |
+| 27/06/24 |    snackVideo    | Get video URL and other infos                                      |
+| 27/06/24 |     sticker      | Search sticker based on the given query                            |
+| 27/06/24 |   geniusLyric    | Get lyric from genius based on artist and song name                |
+| 27/06/24 |    webArchive    | Search Web That's Archived Using API                               |
+| 27/06/24 |     createQr     | Create QR And Return Buffer                                        |
+| 27/06/24 |      readQr      | Read QR By Buffer                                                  |
+| 27/06/24 |   mangaSearch    | Search Manga Based On The Given Query                              |
+| 27/06/24 |      manga       | Get manga info based on the given myanimelist manga url            |
 
->>>>>>> dev
 <br>
 <br>
 

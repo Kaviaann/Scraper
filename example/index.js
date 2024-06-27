@@ -1,7 +1,7 @@
 /* <=====  This is an example for CommonJS  =====> */
-const { animeSearch, githubUser } = require("../src/cjs");
+const { animeSearch } = require("../src/cjs");
 
-/*animeSearch("Evangelion", (datas) => {
+animeSearch("Evangelion", (datas) => {
   if (!Buffer.compare(Buffer.from(datas), Buffer.from([])))
     console.log(`Anime Not Found`);
   else {
@@ -20,8 +20,3 @@ const { animeSearch, githubUser } = require("../src/cjs");
     console.log(res.join("\n\n" + "-".repeat(20) + "\n"));
   }
 });
-*/
-
-githubUser('Kaviaann').then(v => {
-    console.log(v)
-})

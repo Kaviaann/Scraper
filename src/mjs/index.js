@@ -1,2 +1,2 @@
-import scraper from "./lib/index.js";
-export default scraper;
+
+export * from "./lib/index.js";
