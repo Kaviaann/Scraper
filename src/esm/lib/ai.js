@@ -145,7 +145,10 @@ class Ai {
                 body: data,
               })
                 .then((v) => v.json())
-                .then((v) => console.log(v));
+                .then((v) => (async () => {
+                  await this.getSeshId()
+                  resolve(v.output)
+                }));
             })()
           );
       } catch (e) {
