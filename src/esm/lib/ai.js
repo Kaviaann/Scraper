@@ -1,18 +1,25 @@
 import cheerio from "cheerio";
+import FormData from "form-data";
+import fs from "fs";
 
 class Ai {
   constructor() {
-    this.BASE_URL = "https://boredhumans.com/apis/boredagi_api.php";
+    this.BASE = "https://boredhumans.com";
+    this.BASE_URL = this.BASE + "/apis/boredagi_api.php";
+    this.BASE_CDN = this.BASE + "/boredagi_files";
+    this.BASE_UPLOAD = this.BASE + "/apis/boredagi_upload.php";
     this.uid = {};
     this.sesh_id = {};
     this.tools = {
       celebrity_ai: 10,
       txt2img: 3,
+      img_recognition: 6,
     };
     this.num = 0;
     this.text = {
       10: "I want to talk to someone famous.",
       3: "Can you generate an image?",
+      6: "Describe this image for me.",
     };
   }
 
@@ -110,6 +117,61 @@ class Ai {
       }
     });
   }
+
+  async imageRecognition(url, prompt) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        this.num = this.tools.img_recognition;
+        if (!this.sesh_id[this.num]) await this.getSeshId();
+
+        const data = new URLSearchParams({
+          prompt: encodeURIComponent(url),
+          uid: this.uid[this.num],
+          sesh_id: this.sesh_id[this.num],
+          get_tool: false,
+          tool_num: this.num,
+        });
+
+        fetch(this.BASE_URL, {
+          method: "POST",
+          body: data,
+        })
+          .then((v) => v.json())
+          .then((v) =>
+            (async () => {
+              data.set("prompt", encodeURIComponent(prompt));
+              fetch(this.BASE_URL, {
+                method: "POST",
+                body: data,
+              })
+                .then((v) => v.json())
+                .then((v) => console.log(v));
+            })()
+          );
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
 }
+
+const ai = new Ai();
+ai.imageRecognition(ai.BASE_CDN + "/667fff314c5c9.jpg", "Apa isinya?");
+
+/*
+{
+  status: 'success',
+  output: 'Gambar tersebut menampilkan seorang karakter dari anime atau manga "O
+shi no Ko". Karakter ini memiliki rambut pirang dengan mata biru, mengenakan top
+i hitam dengan tulisan "OSHI NO KO" dan bintang putih di atasnya. Dia juga menge
+nakan jaket hitam dengan hoodie biru, serta kalung dengan liontin berbentuk perm
+ata biru.',
+  output_type: 'string',
+  tool_num: '6',
+  sesh_id: '6af45324-e9e7-4949-9f80-b92ece59c1a3',
+  uploads: false,
+  tool_name: 'Image_Chat_API'
+}
+*/
 
 export { Ai };
