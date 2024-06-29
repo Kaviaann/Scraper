@@ -7,3 +7,4 @@ export * from "./qr.js";
 export * from "./search.js";
 export * from "./tiktok.js";
 export * from "./twitter.js";
+export * from "./ai.js";
