@@ -10,7 +10,7 @@
   "exports": {
     ".": {
       "types" : "./src/@types",
-      "import": "./src/mjs/index.js",
+      "import": "./src/esm/index.js",
       "require": "./src/cjs/index.js"
     }
   },
