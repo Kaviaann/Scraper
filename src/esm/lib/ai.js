@@ -23,7 +23,7 @@ class Ai {
     };
   }
 
-  // Creds
+  // ? FUNCTION
   getUid() {
     this.uid[this.num] =
       Date.now().toString(36) + Math.random().toString(36).slice(2);
@@ -33,6 +33,9 @@ class Ai {
     await this.getUid();
     const res = await fetch(this.BASE_URL, {
       method: "POST",
+      headers: {
+        "User-Agent": navigator.userAgent,
+      },
       body: new URLSearchParams({
         prompt: encodeURIComponent(this.text[this.num]),
         uid: this.uid[this.num],
@@ -61,6 +64,9 @@ class Ai {
 
         const res = await fetch(this.BASE_URL, {
           method: "POST",
+          headers: {
+            "User-Agent": navigator.userAgent,
+          },
           body: data,
         }).then((v) => v.json());
         if (res.status !== "success")
@@ -90,6 +96,9 @@ class Ai {
 
         const res = await fetch(this.BASE_URL, {
           method: "POST",
+          headers: {
+            "User-Agent": navigator.userAgent,
+          },
           body: new URLSearchParams(data),
         })
           .then((v) => v.json())
@@ -99,6 +108,9 @@ class Ai {
 
               return await fetch(this.BASE_URL, {
                 method: "POST",
+                headers: {
+                  "User-Agent": navigator.userAgent,
+                },
                 body: new URLSearchParams(data),
               }).then((v) => v.json());
             })()
@@ -134,6 +146,9 @@ class Ai {
 
         fetch(this.BASE_URL, {
           method: "POST",
+          headers: {
+            "User-Agent": navigator.userAgent,
+          },
           body: data,
         })
           .then((v) => v.json())
@@ -142,6 +157,9 @@ class Ai {
               data.set("prompt", encodeURIComponent(prompt));
               fetch(this.BASE_URL, {
                 method: "POST",
+                headers: {
+                  "User-Agent": navigator.userAgent,
+                },
                 body: data,
               })
                 .then((v) => v.json())
@@ -172,6 +190,9 @@ class Ai {
 
         fetch(this.BASE_URL, {
           method: "POST",
+          headers: {
+            "User-Agent": navigator.userAgent,
+          },
           body: data,
         })
           .then((v) => v.json())

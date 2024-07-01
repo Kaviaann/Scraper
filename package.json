@@ -1,15 +1,14 @@
 {
   "name": "@kaviaann/scraper",
   "main": "index.js",
-  "type": "commonjs",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Scraper",
   "directories": {
     "test": "test"
   },
   "exports": {
     ".": {
-      "types" : "./src/@types",
+      "types": "./src/@types",
       "import": "./src/esm/index.js",
       "require": "./src/cjs/index.js"
     }
@@ -34,6 +33,7 @@
     "groq-sdk": "^0.3.3",
     "htmlparser2": "^8.0.2",
     "jimp": "^0.22.12",
+    "jsdom": "^24.1.0",
     "mime-db": "^1.52.0",
     "mime-types": "^2.1.35",
     "nth-check": "^2.1.1",

@@ -1,4 +1,4 @@
-const cheerio = require("cheerio");
+import cheerio from "cheerio";
 
 async function terabox(url) {
   return new Promise(async (resolve, reject) => {
@@ -103,9 +103,4 @@ async function snackVideo(url) {
   });
 }
 
-module.exports = {
-  terabox,
-  drive,
-  mediafire,
-  snackVideo,
-}
+export { drive, mediafire, terabox, snackVideo };

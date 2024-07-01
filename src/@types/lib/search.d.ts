@@ -64,8 +64,6 @@ export declare interface IGeniusLyric {
 }
 
 export declare function sticker(query: String): Promise<IStickerResponse>;
-export declare function createQr(query: String): Promise<Buffer>;
-export declare function readQr(buffer: Buffer): Promise<any>;
 export declare function geniusLyric(
   title: String,
   artist: String
