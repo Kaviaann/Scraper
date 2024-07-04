@@ -1,14 +1,13 @@
 {
   "name": "@kaviaann/scraper",
   "main": "index.js",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Scraper",
   "directories": {
     "test": "test"
   },
   "exports": {
     ".": {
-      "types": "./src/@types",
       "import": "./src/esm/index.js",
       "require": "./src/cjs/index.js"
     }
@@ -42,7 +41,8 @@
     "proxy-from-env": "^1.1.0",
     "qrcode": "^1.5.3",
     "qrcode-reader": "^1.0.4",
-    "sharp": "^0.33.4"
+    "sharp": "^0.33.4",
+    "socks-proxy-agent": "^8.0.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

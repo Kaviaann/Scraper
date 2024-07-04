@@ -1,5 +1,12 @@
 const cheerio = require("cheerio");
 
+/**
+ * SCRAPED BY KAVIAANN
+ * FORBIDDEN TO REMOVE WM
+ * Follow For More Scrape
+ * @link https://kavian.xyz/s/ch
+ * @class Ai
+ */
 class Ai {
   constructor() {
     this.BASE = "https://boredhumans.com";

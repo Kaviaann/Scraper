@@ -1,5 +1,14 @@
 import cheerio from "cheerio";
+import FormData from "form-data";
+import fetch from "node-fetch";
 
+/**
+ * SCRAPED BY KAVIAANN
+ * FORBIDDEN TO REMOVE WM
+ * Follow For More Scrape
+ * @link https://kavian.xyz/s/ch
+ * @class Ai
+ */
 class Ai {
   constructor() {
     this.BASE = "https://boredhumans.com";
@@ -24,7 +33,7 @@ class Ai {
   }
 
   // ? FUNCTION
-  getUid() {
+  #getUid() {
     this.uid[this.num] =
       Date.now().toString(36) + Math.random().toString(36).slice(2);
   }
