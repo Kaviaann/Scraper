@@ -31,13 +31,13 @@ class Ai {
   }
 
   // ? FUNCTION
-  getUid() {
+  #getUid() {
     this.uid[this.num] =
       Date.now().toString(36) + Math.random().toString(36).slice(2);
   }
 
-  async getSeshId() {
-    await this.getUid();
+  async #getSeshId() {
+    await this.#getUid();
     const res = await fetch(this.BASE_URL, {
       method: "POST",
       headers: {
@@ -60,7 +60,7 @@ class Ai {
     return new Promise(async (resolve, reject) => {
       try {
         this.num = this.tools.celebrity_ai;
-        if (!this.sesh_id[this.num]) await this.getSeshId();
+        if (!this.sesh_id[this.num]) await this.#getSeshId();
         const data = new URLSearchParams({
           prompt: encodeURIComponent(prompt),
           uid: this.uid[this.num],
@@ -78,7 +78,7 @@ class Ai {
         }).then((v) => v.json());
         if (res.status !== "success")
           return (async () => {
-            await this.getSeshId();
+            await this.#getSeshId();
             await this.celebrityAi(prompt);
           })();
         return resolve(res.output);
@@ -92,7 +92,7 @@ class Ai {
     return new Promise(async (resolve, reject) => {
       try {
         this.num = this.tools.txt2img;
-        if (!this.sesh_id[this.num]) await this.getSeshId();
+        if (!this.sesh_id[this.num]) await this.#getSeshId();
         const data = {
           prompt: encodeURIComponent(prompt),
           uid: this.uid[this.num],
@@ -125,11 +125,11 @@ class Ai {
 
         if (res.status !== "success")
           return (async () => {
-            await this.getSeshId();
+            await this.#getSeshId();
             await this.txt2img(prompt);
           })();
         const $ = cheerio.load(res.output);
-        await this.getSeshId();
+        await this.#getSeshId();
         return resolve($("img").attr("src"));
       } catch (e) {
         reject(e);
@@ -141,7 +141,7 @@ class Ai {
     return new Promise(async (resolve, reject) => {
       try {
         this.num = this.tools.img_recognition;
-        if (!this.sesh_id[this.num]) await this.getSeshId();
+        if (!this.sesh_id[this.num]) await this.#getSeshId();
 
         const data = new URLSearchParams({
           prompt: encodeURIComponent(url),
@@ -171,7 +171,7 @@ class Ai {
               })
                 .then((v) => v.json())
                 .then((v) => async () => {
-                  await this.getSeshId();
+                  await this.#getSeshId();
                   resolve(v.output);
                 });
             })()
@@ -186,7 +186,7 @@ class Ai {
     return new Promise(async (resolve, reject) => {
       try {
         this.num = this.tools.txt2speech;
-        if (!this.sesh_id[this.num]) await this.getSeshId();
+        if (!this.sesh_id[this.num]) await this.#getSeshId();
         const data = new URLSearchParams({
           prompt: encodeURIComponent(prompt),
           uid: this.uid[this.num],
@@ -205,7 +205,7 @@ class Ai {
           .then((v) => v.json())
           .then((v) =>
             (async () => {
-              await this.getSeshId();
+              await this.#getSeshId();
               return resolve(v.output);
             })()
           );

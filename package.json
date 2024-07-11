@@ -35,6 +35,7 @@
     "jsdom": "^24.1.0",
     "mime-db": "^1.52.0",
     "mime-types": "^2.1.35",
+    "nsfwjs": "^4.1.0",
     "nth-check": "^2.1.1",
     "parse5": "^7.1.2",
     "parse5-htmlparser2-tree-adapter": "^7.0.0",

@@ -14,7 +14,7 @@ export declare class Ai {
   num: 0;
   text: { [tool_num: number]: String };
   getUid(): String;
-  getSeshId(): Promise<String>;
+  #getSeshId(): Promise<String>;
   celebrityAi(prompt: String): Promise<String>;
   txt2img(prompt: String): Promise<String>;
   imageRecognition(url: String, prompt: String): Promise<String>;
