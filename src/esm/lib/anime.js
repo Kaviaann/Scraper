@@ -698,7 +698,7 @@ class Meganei {
               : thumbnail.replace("-0", "-VOLUME-0"),
             id: $(i).attr("id"),
             createTime: new Date($(i).find("time").attr("datetime")) - 1,
-            timeFormat: $(i).find("time").text().trim(),
+            formatTime: $(i).find("time").text().trim(),
             publisher: $(i).find("span.author").text().trim(),
             desc:
               $(i).find("div.entry-content > p").text().trim() +
@@ -796,19 +796,13 @@ class Meganei {
             data.download.push(download);
           });
 
-        console.log(JSON.stringify(data, null, 2));
+        resolve(data);
       } catch (e) {
         reject(e);
       }
     });
   }
 }
-
-const meganei = await new Meganei();
-meganei.search("Solo leveling").then((v) => console.log(v));
-meganei
-  .info("https://meganei.net/solo-leveling-special-batch-pdf/")
-  .then((v) => console.log(v));
 
 export {
   animeCharacter,
@@ -817,4 +811,5 @@ export {
   animeSearch,
   mangaSearch,
   manga,
+  Meganei,
 };
