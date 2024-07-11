@@ -44,3 +44,4 @@ export declare function terabox(url: String): Promise<ITerabox>;
 export declare function drive(url: String): Promise<IDrive>;
 export declare function mediafire(url: String): Promise<IMediafire>;
 export declare function snackVideo(url: String): Promise<ISnackVideo>;
+export declare function cobalt(url: String): Promise<Object>;
