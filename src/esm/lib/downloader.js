@@ -138,7 +138,7 @@ async function cobalt(url) {
 
         const stream = await fetch(res.url);
         if (!stream.ok) return reject("Download Failed!");
-        return resolve(stream);
+        return resolve(await stream.json());
       });
     } catch (e) {
       reject(e);
