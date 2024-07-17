@@ -251,10 +251,70 @@ async function cobalt(
   });
 }
 
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
+async function gofile(url) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!/gofile.io\/d\//gi.test(url)) return reject("Invalid URL!");
+      const id = /https:\/\/gofile.io\/d\/([\d\w]+)/gi.exec(url)[1];
+
+      if (!id) return reject("Folder Id Not Found");
+
+      const BASE_API = "https://api.gofile.io";
+      const BASE_URL = "https://gofile.io";
+      const acc = await fetch(BASE_API + "/accounts", {
+        method: "POST",
+        headers: {
+          origin: BASE_URL,
+          referer: `${BASE_URL}/`,
+          "user-agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        },
+        body: "{}",
+      }).then((v) => v.json());
+
+      if (acc.status !== "ok") return reject("Error making account");
+      const { token } = acc.data;
+
+      const content = await fetch(
+        BASE_API +
+          "/contents/" +
+          id +
+          "?" +
+          new URLSearchParams({ wt: "4fd6sg89d7s6" }),
+        {
+          method: "GET",
+          headers: {
+            origin: BASE_URL,
+            referer: `${BASE_URL}/`,
+            "user-agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+            authorization: `Bearer ` + token,
+          },
+        }
+      ).then((v) => v.json());
+
+      if (content.status !== "ok") return reject("Error Fetching Content");
+
+      resolve(content.data);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 module.exports = {
   terabox,
   drive,
   mediafire,
   snackVideo,
   cobalt,
+  gofile,
 };

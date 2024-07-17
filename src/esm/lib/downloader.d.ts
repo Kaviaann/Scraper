@@ -70,6 +70,35 @@ export declare interface ICobaltDownload {
   audio: string;
 }
 
+export declare interface IGoChild {
+  id: String;
+  parentFolder: String;
+  type: "file";
+  name: String;
+  createTime: Number;
+  size: Number;
+  downloadCount: Number;
+  md5: String;
+  mimetype: String;
+  servers: String[];
+  serverSelected: String;
+  link: String;
+  thumbnail: String;
+}
+
+export declare interface IGofile {
+  id: String;
+  type: "Folder";
+  name: String;
+  createTime: Number;
+  code: String;
+  public: Boolean;
+  totalDownloadCount: Number;
+  totalSize: Number;
+  childrenIds: String[];
+  children: IGoChild;
+}
+
 export declare function terabox(url: String): Promise<ITerabox>;
 export declare function drive(url: String): Promise<IDrive>;
 export declare function mediafire(url: String): Promise<IMediafire>;
@@ -78,3 +107,4 @@ export declare function cobalt(
   url: String,
   options: ICobaltOptions
 ): Promise<ICobaltDownload>;
+export declare function gofile(url: String): Promise<IGofile>;

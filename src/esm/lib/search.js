@@ -1,9 +1,9 @@
 import cheerio from "cheerio";
-const BASE_URL = "https://genius.com";
 
 async function geniusLyric(title, artist) {
   return new Promise(async (resolve, reject) => {
     try {
+      const BASE_URL = "https://genius.com";
       const url = `${BASE_URL}/${artist.replace(/[ ]/gi, "-")}-${title.replace(
         /[ ]/gi,
         "-"
@@ -148,5 +148,28 @@ async function webArchive(query) {
     }
   });
 }
+
+async function npmSearch(query) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(
+        "https://www.npmjs.com/search/suggestions?" +
+          new URLSearchParams({
+            q: query,
+          })
+      ).then((v) => v.json());
+
+      if (!res.length) return reject("Packages Not Found");
+
+      return resolve(res);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+npmSearch("@kaviaannassasasasa")
+  .then((v) => console.log(v))
+  .catch((e) => console.log(e));
 
 export { sticker, geniusLyric, webArchive };
