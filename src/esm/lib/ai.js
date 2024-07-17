@@ -248,6 +248,11 @@ async function stableDiff(prompt, negative) {
   });
 }
 
-stableDiff("cute cat", "not hd, watermark").then((v) => console.log(v));
+stableDiff("cute cat", "not hd, watermark").then((v) => {
+  const base64 = v.images[0].url.split(";base64,").pop();
+
+  console.log(base64);
+  fs.writeFileSync("./images.jpeg", new Buffer(base64, "base64"));
+});
 
 export { Ai };
