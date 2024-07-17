@@ -149,6 +149,15 @@ async function webArchive(query) {
   });
 }
 
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * Npm Package : @Kaviaann/scraper
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
 async function npmSearch(query) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -168,8 +177,4 @@ async function npmSearch(query) {
   });
 }
 
-npmSearch("@kaviaannassasasasa")
-  .then((v) => console.log(v))
-  .catch((e) => console.log(e));
-
-export { sticker, geniusLyric, webArchive };
+export { sticker, geniusLyric, webArchive, npmSearch };

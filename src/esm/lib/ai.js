@@ -1,5 +1,4 @@
 import cheerio from "cheerio";
-import fs from "fs";
 import fetch from "node-fetch";
 
 /**
@@ -218,9 +217,18 @@ class Ai {
   }
 }
 
-async function stableDiff(prompt, negative) {
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
+async function stableDiff(prompt, negative = "") {
   return new Promise(async (resolve, reject) => {
     try {
+      if (!prompt) return reject("Enter Prompt!");
       const res = await fetch(
         "https://requesteracessibili.joaovitorkas13.workers.dev",
         {
@@ -248,11 +256,4 @@ async function stableDiff(prompt, negative) {
   });
 }
 
-stableDiff("cute cat", "not hd, watermark").then((v) => {
-  const base64 = v.images[0].url.split(";base64,").pop();
-
-  console.log(base64);
-  fs.writeFileSync("./images.jpeg", new Buffer(base64, "base64"));
-});
-
-export { Ai };
+export { Ai, stableDiff };

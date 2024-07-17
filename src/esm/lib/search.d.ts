@@ -63,6 +63,29 @@ export declare interface IGeniusLyric {
   }[];
 }
 
+export declare interface INpmSearch {
+  name: String;
+  scope: String;
+  version: String;
+  description: String;
+  keywords: String[];
+  date: String;
+  links: {
+    npm: String;
+  };
+  author: {
+    name: String;
+  };
+  publisher: {
+    username: String;
+    email: String;
+  };
+  maintainers: {
+    username: String;
+    email: String;
+  }[];
+}
+
 export declare function sticker(query: String): Promise<IStickerResponse>;
 export declare function geniusLyric(
   title: String,
@@ -79,3 +102,4 @@ export declare function webArchive(query: String): Promise<{
     };
   };
 }>;
+export declare function npmSearch(query: String): Promise<INpmSearch[]>;

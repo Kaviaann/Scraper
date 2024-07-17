@@ -20,3 +20,23 @@ export declare class Ai {
   imageRecognition(url: String, prompt: String): Promise<String>;
   txt2speech(prompt: String): Promise<String>;
 }
+
+export declare interface IStableDiffusion {
+  images: {
+    url: String;
+    width: Number;
+    height: Number;
+    content_type: String;
+  }[];
+  timings: {
+    inference: Number;
+  };
+  seed: Number;
+  has_nsfw_concept: Boolean[];
+  prompt: String;
+}
+
+export declare function stableDiff(
+  prompt: String,
+  negative: String
+): Promise<IStableDiffusion>;
