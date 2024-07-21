@@ -36,7 +36,59 @@ export declare interface IStableDiffusion {
   prompt: String;
 }
 
+export declare interface IAnimagineOptions {
+  prompt: String;
+  negative: String;
+  style:
+    | "(none)"
+    | "Cinematic"
+    | "Photographic"
+    | "Anime"
+    | "Manga"
+    | "Digital Art"
+    | "Pixel art"
+    | "Fantasy art"
+    | "Neonpunk"
+    | "3D Model";
+  sampler:
+    | "DDIM"
+    | "Euler a"
+    | "Euler"
+    | "DPM++ 2M Karras"
+    | "DPM++ 2M SDE Karras"
+    | "DPM++ SDE Karras";
+  quality: "(none)" | "Light" | "Standard" | "Heavy";
+  width: Number;
+  height: Number;
+  ratio:
+    | "Custom"
+    | "640 x 1536"
+    | "832 x 1216"
+    | "1024 x 1024"
+    | "1152 x 896"
+    | "1344 x 768"
+    | "768 x 1344"
+    | "896 x 1152"
+    | "1216 x 832"
+    | "1536 x 640";
+}
+
+export declare interface IAnimagineGallery {
+  image: {
+    path: String;
+    url: String;
+    size?: String | null;
+    orig_name: String;
+    mime_type?: String | null;
+    is_stream: Boolean;
+  };
+  caption?: String | null;
+}
+
 export declare function stableDiff(
   prompt: String,
   negative: String
 ): Promise<IStableDiffusion>;
+export declare function animagine(
+  Options: IAnimagineOptions
+): Promise<IAnimagineGallery[]>;
