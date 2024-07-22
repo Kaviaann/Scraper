@@ -387,4 +387,132 @@ async function animagine(options = {}) {
   });
 }
 
+async function omniai(
+  prompt,
+  system = "You are an Ai Asistant that is destinated to help user with their problems"
+) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const BASE_URL = "https://omniplex.ai/api";
+      const headers = {
+        origin: BASE_URL.replace("/api", ""),
+        // referer: "https://omniplex.ai/chat/pekoRmWOP-",
+        "user-agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "Content-Type": "application/json",
+      };
+      const chatJSON = {
+        frequency_penalty: 0,
+        max_tokens: 512,
+        messages: [
+          {
+            role: "system",
+            content: system,
+          },
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        model: "gpt-3.5-turbo",
+        presence_penalty: 0,
+        temperature: 1,
+        top_p: 1,
+      };
+
+      // ? Determine which mode
+      const { mode } = await fetch(BASE_URL + "/tools", {
+        method: "POST",
+        headers,
+        body: JSON.stringify(chatJSON.messages),
+      }).then((v) => v.json());
+
+      // ? Run by mode type
+      switch (mode) {
+        case "search": {
+          const a = await searchMode();
+          console.log("A : " + a);
+          if (!a[0]) reject("Search mode failed with error : \n" + a[1]);
+          return resolve(a);
+          break;
+        }
+
+        case "chat": {
+          const b = await chat();
+          if (!b[0]) reject("Chat mode failed with error : \n" + b[1]);
+          return resolve(b);
+          break;
+        }
+      }
+
+      // ? Handler
+      async function chat() {
+        return new Promise(async (s, r) => {
+          try {
+            const a = await fetch(BASE_URL + "/chat", {
+              method: "POST",
+              headers,
+              body: JSON.stringify(chatJSON),
+            }).then((v) => v.text());
+
+            if (!a) return r([false, "Failed to get result"]);
+            s(a);
+          } catch (e) {
+            r(e);
+          }
+        });
+      }
+
+      async function searchMode() {
+        return new Promise(async (s, r) => {
+          try {
+            const a = await fetch(
+              BASE_URL +
+                "/search?" +
+                new URLSearchParams({
+                  q: "search" + prompt,
+                  limit: 5,
+                })
+            ).then((v) => v.json());
+
+            if (a.message !== "Success") return r([false, "Failed to search"]);
+
+            const b = a.data.webPages.value.map((v) => v.url);
+            const c = await fetch(
+              BASE_URL +
+                "/scrape?" +
+                new URLSearchParams({
+                  urls: b.join(","),
+                }),
+              {
+                method: "POST",
+                headers,
+              }
+            ).then((v) => v.text());
+            chatJSON.messages[1] = {
+              role: "user",
+              content: c,
+            };
+            const d = await fetch(BASE_URL + "/chat", {
+              method: "POST",
+              headers,
+              data: JSON.stringify(chatJSON),
+            }).then((v) => v);
+            console.log(d);
+            // s(d);
+          } catch (e) {
+            // r(e);
+          }
+        });
+      }
+    } catch (e) {
+      reject([false, e]);
+    }
+  });
+}
+
+omniai("Who are you?")
+  .then((v) => console.log(v))
+  .catch((e) => console.log(e));
+
 export { Ai, stableDiff, animagine };
