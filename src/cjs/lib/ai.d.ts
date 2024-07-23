@@ -85,6 +85,34 @@ export declare interface IAnimagineGallery {
   caption?: String | null;
 }
 
+export declare interface IOmniplexSearch {
+  webPages?: {
+    value: {
+      name: String;
+      url: String;
+      snippet: String;
+    }[];
+  };
+  videos?: {
+    value: {
+      thumbnailUrl: String;
+      hostPageUrl: String;
+    }[];
+  };
+  images?: {
+    value: {
+      thumbnailUrl: String;
+      hostPageUrl: String;
+    }[];
+  };
+}
+
+export declare interface IOmniplexResponse {
+  mode: "chat" | "search";
+  data: String;
+  search?: IOmniplexSearch;
+}
+
 export declare function stableDiff(
   prompt: String,
   negative: String
@@ -92,3 +120,7 @@ export declare function stableDiff(
 export declare function animagine(
   Options: IAnimagineOptions
 ): Promise<IAnimagineGallery[]>;
+export declare function omniplexAi(
+  prompt: String,
+  system: String
+): Promise<IOmniplexResponse>;

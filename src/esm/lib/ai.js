@@ -387,7 +387,17 @@ async function animagine(options = {}) {
   });
 }
 
-async function omniai(
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * @param {String} prompt
+ * @param { String} system
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
+async function omniplexAi(
   prompt,
   system = "You are an Ai Asistant that is destinated to help user with their problems"
 ) {
@@ -396,7 +406,6 @@ async function omniai(
       const BASE_URL = "https://omniplex.ai/api";
       const headers = {
         origin: BASE_URL.replace("/api", ""),
-        // referer: "https://omniplex.ai/chat/pekoRmWOP-",
         "user-agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
         "Content-Type": "application/json",
@@ -421,7 +430,7 @@ async function omniai(
       };
 
       // ? Determine which mode
-      const { mode } = await fetch(BASE_URL + "/tools", {
+      const { mode, arg } = await fetch(BASE_URL + "/tools", {
         method: "POST",
         headers,
         body: JSON.stringify(chatJSON.messages),
@@ -431,16 +440,22 @@ async function omniai(
       switch (mode) {
         case "search": {
           const a = await searchMode();
-          console.log("A : " + a);
-          if (!a[0]) reject("Search mode failed with error : \n" + a[1]);
-          return resolve(a);
+          if (!a[0]) reject("Search mode failed with error : \n" + a[1] || a);
+          return resolve({
+            mode,
+            data: a[0],
+            search: a[1],
+          });
           break;
         }
 
         case "chat": {
           const b = await chat();
-          if (!b[0]) reject("Chat mode failed with error : \n" + b[1]);
-          return resolve(b);
+          if (!b[0]) reject("Chat mode failed with error : \n" + b[1] || b);
+          return resolve({
+            mode,
+            data: b,
+          });
           break;
         }
       }
@@ -489,17 +504,14 @@ async function omniai(
                 headers,
               }
             ).then((v) => v.text());
-            chatJSON.messages[1] = {
-              role: "user",
-              content: c,
-            };
+            chatJSON.messages[1].content = c + "\n\nQuestion : " + prompt;
+            chatJSON.messages[0].content = `Generate a comprehensive and informative answer (but no more than 256 words in 2 paragraphs) for a given question solely based on the provided web Search Results (URL and Summary).You must only use information from the provided search results.Use an unbiased and journalistic tone.Use this current date and time: ${new Date().toUTCString()}.Combine search results together into a coherent answer.Do not repeat text.Only cite the most relevant results that answer the question accurately.If different results refer to different entities with the same name, write separate answers for each entity.You have the ability to search and will be given websites and the scarped data from them and you will have to make up an answer with that only. ${system}`;
             const d = await fetch(BASE_URL + "/chat", {
               method: "POST",
               headers,
-              data: JSON.stringify(chatJSON),
-            }).then((v) => v);
-            console.log(d);
-            // s(d);
+              body: JSON.stringify(chatJSON),
+            }).then((v) => v.text());
+            s([d, a.data]);
           } catch (e) {
             // r(e);
           }
@@ -511,8 +523,4 @@ async function omniai(
   });
 }
 
-omniai("Who are you?")
-  .then((v) => console.log(v))
-  .catch((e) => console.log(e));
-
-export { Ai, stableDiff, animagine };
+export { Ai, stableDiff, animagine, omniplexAi };
