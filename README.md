@@ -142,7 +142,6 @@ animeSearch("Boku No Hero Academia", (datas) => {
 | 23/07/24 |    npmSearch     | Search with Npm                                                                             |
 | 23/07/24 |   npmSearchh2    | Search with different SEO                                                                   |
 | 23/07/24 |       npm        | Get info about the given package name                                                       |
-| 23/07/24 |      tiktok      |
 
 <br>
 <br>
