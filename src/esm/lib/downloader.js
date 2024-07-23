@@ -1,6 +1,6 @@
-const cheerio = require("cheerio");
-const fetch = require("node-fetch");
-const path = require("path");
+import cheerio from "cheerio";
+import path from "path";
+import fetch from "node-fetch";
 
 async function terabox(url) {
   return new Promise(async (resolve, reject) => {
@@ -99,19 +99,6 @@ async function snackVideo(url) {
       };
 
       resolve(data);
-    } catch (e) {
-      reject(e);
-    }
-  });
-}
-
-async function bulkMediafire(url) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      if (!/mediafire\.com\/folder\//gi.test(url)) return reject("Invalid URL");
-      const res = await fetch(url).then((v) => v.text());
-      const $ = cheerio.load(res);
-      console.log($());
     } catch (e) {
       reject(e);
     }
@@ -310,11 +297,4 @@ async function gofile(url) {
   });
 }
 
-module.exports = {
-  terabox,
-  drive,
-  mediafire,
-  snackVideo,
-  cobalt,
-  gofile,
-};
+export { drive, mediafire, terabox, snackVideo, cobalt, gofile };
