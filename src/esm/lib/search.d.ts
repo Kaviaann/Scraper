@@ -128,7 +128,6 @@ export declare interface INpmSearchs {
         username: String;
         email: StaticRange;
       }[];
-      keywordsTruncated: true;
     };
     flags: {
       insecure: 0;
@@ -173,7 +172,9 @@ export declare interface INpmPackage {
       maintainer: String;
       time: String;
     };
-    types: { [key: String]: { package: String } };
+    types: {
+      [key: string]: String;
+    };
   };
   dependents: {
     dependentsCount: Number;
@@ -202,7 +203,7 @@ export declare interface INpmPackage {
     description: String;
     keywords: String[];
     deprecations: String[];
-    dependencies: { [key: String]: String };
+    dependencies: { [key: string]: String };
     maintainers: {
       name: String;
       avatars: {
@@ -230,7 +231,7 @@ export declare interface INpmPackage {
     description: String;
     keywords: String[];
     deprecations: String[];
-    dependencies: { [key: String]: String };
+    dependencies: { [key: string]: String };
     maintainers: {
       name: String;
       avatars: {
@@ -268,14 +269,13 @@ export declare interface INpmPackage {
     };
   };
   private: Boolean;
-  isSecurityPlaceholder: Boolean;
   provenance: {
     enabled: Boolean;
     feedbackUrl: String;
   };
   scope: String;
   starAction: String;
-  versionsDownloads: { [key: String]: Number };
+  versionsDownloads: { [key: string]: Number };
   readme: {
     data: String;
     ref: "readme" | String;
@@ -285,7 +285,6 @@ export declare interface INpmPackage {
     "readme.data": "readme";
   };
   user: null;
-  auditLogEnabled: Boolean;
   userEmailVerified: null;
   csrftoken: String;
   notifications: [];

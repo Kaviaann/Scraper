@@ -133,15 +133,22 @@ animeSearch("Boku No Hero Academia", (datas) => {
 | 27/06/24 |   mangaSearch    | Search Manga Based On The Given Query                                                       |
 | 27/06/24 |      manga       | Get manga info based on the given myanimelist manga url                                     |
 | 1/07/24  |        Ai        | Make a class with Ai with feature like celebrityAi, txt2img, txt2speech, and imgrecognition |
+| 23/07/24 |    stableDiff    | Stable Diffusion                                                                            |
+| 23/07/24 |    animagine     | AnimagineXL Scrape                                                                          |
+| 23/07/24 |    omniplexAi    | OmniplexAi                                                                                  |
+| 23/07/24 |     Meganei      | Meganei Class with search and info function                                                 |
+| 23/07/24 |      cobalt      | All In One Downloader ( AIO )                                                               |
+| 23/07/24 |      gofile      | Gofile Downloader                                                                           |
+| 23/07/24 |    npmSearch     | Search with Npm                                                                             |
+| 23/07/24 |   npmSearchh2    | Search with different SEO                                                                   |
+| 23/07/24 |       npm        | Get info about the given package name                                                       |
+| 23/07/24 |      tiktok      |
 
 <br>
 <br>
 
 ## Upcoming
 
-|     Name      | Feature                                          |
-| :-----------: | :----------------------------------------------- |
-| characterInfo | All Information About The Given Character        |
-|  tiktokTrend  | Check Tiktok Trend On Various Region             |
-|  tiktokUser   | See All Of The User Info                         |
-|  githubRepo   | See All The Information On The Github Repository |
+|     Name     | Feature                         |
+| :----------: | :------------------------------ |
+| Any request? | Contact me! vielynian@gmail.com |
