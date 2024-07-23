@@ -1,5 +1,4 @@
 const cheerio = require("cheerio");
-const BASE_URL = "https://genius.com";
 
 async function sticker(query, page = 1, type = "sticker") {
   return new Promise(async (resolve, reject) => {
@@ -49,6 +48,7 @@ async function sticker(query, page = 1, type = "sticker") {
 async function geniusLyric(title, artist) {
   return new Promise(async (resolve, reject) => {
     try {
+      const BASE_URL = "https://genius.com";
       const url = `${BASE_URL}/${artist.replace(/[ ]/gi, "-")}-${title.replace(
         /[ ]/gi,
         "-"
@@ -155,8 +155,105 @@ async function webArchive(query) {
   });
 }
 
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * Npm Package : @Kaviaann/scraper
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
+async function npmSearch(query) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(
+        "https://www.npmjs.com/search/suggestions?" +
+          new URLSearchParams({
+            q: query,
+          })
+      ).then((v) => v.json());
+
+      if (!res.length) return reject("Packages Not Found");
+
+      return resolve(res);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * Npm Package : @Kaviaann/scraper
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
+async function npmSearch2(query) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(
+        "https://www.npmjs.com/search?" + new URLSearchParams({ q: query }),
+        {
+          method: "GET",
+          headers: {
+            Referer: "https://www.npmjs.com/",
+            "user-agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+            "X-Spiferack": 1,
+          },
+        }
+      ).then((v) => v.json());
+      if (!res.total) return reject("Packages Not Found");
+
+      resolve(res);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * Npm Package : @Kaviaann/scraper
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
+async function npm(packageName) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(
+        "https://www.npmjs.com/package/" + packageName.replace(" "),
+        {
+          method: "GET",
+          headers: {
+            Referer: "https://www.npmjs.com/",
+            "user-agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+            "X-Spiferack": 1,
+          },
+        }
+      ).then((v) => v.json());
+
+      if (!res.package) return reject("Package Not Found");
+      resolve(res);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 module.exports = {
   sticker,
   geniusLyric,
   webArchive,
+  npmSearch,
+  npmSearch2,
+  npm,
 };
