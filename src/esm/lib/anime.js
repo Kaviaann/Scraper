@@ -5,204 +5,216 @@ import cheerio from "cheerio";
  * FORBIDDEN TO SELL AND DELETE MY WM
  */
 
-async function animeSearch(name, callback) {
-  const url = `https://www.mynimeku.com/?s=${encodeURI(name)}`;
+async function animeSearch(name) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const url = `https://www.mynimeku.com/?s=${encodeURI(name)}`;
 
-  const response = await fetch(url);
-  const html = await response.text();
+      const response = await fetch(url);
+      const html = await response.text();
 
-  const $ = await cheerio.load(html);
+      const $ = await cheerio.load(html);
 
-  // Get Children  ( a (Title) & div ( other ))
-  const content = $(".flexbox2-content");
+      // Get Children  ( a (Title) & div ( other ))
+      const content = $(".flexbox2-content");
 
-  const datas = [];
+      const datas = [];
 
-  new Promise(async (res) => {
-    for (let box of content) {
-      const data = {
-        title: "",
-        link: "",
-        thumb: "",
-        type: "",
-        score: "",
-        season: null,
-        synops: "",
-        genres: [],
-      };
+      for await (let box of content) {
+        const data = {
+          title: "",
+          link: "",
+          thumb: "",
+          type: "",
+          score: "",
+          season: null,
+          synops: "",
+          genres: [],
+        };
 
-      const el = box.children;
-      // Object of value [a, div.flexbox-side]
-      const child = el.filter((v) => v.type === "tag");
+        const el = box.children;
+        // Object of value [a, div.flexbox-side]
+        const child = el.filter((v) => v.type === "tag");
 
-      for (const ch of child) {
-        const chi = ch.children.filter((v) => v.type === "tag");
+        for (const ch of child) {
+          const chi = ch.children.filter((v) => v.type === "tag");
 
-        // console.log(ch)
+          // console.log(ch)
 
-        // * Check if ch is a element
-        if (ch.attribs.title) {
-          data.title = ch.attribs.title;
-          data.link = ch.attribs.href;
-          data.thumb = ch.children
-            .filter((v) => v.type === "tag")[0]
-            .children.filter((v) => v.type === "tag")[0]
-            .attribs.src.split("?")[0];
-        }
+          // * Check if ch is a element
+          if (ch.attribs.title) {
+            data.title = ch.attribs.title;
+            data.link = ch.attribs.href;
+            data.thumb = ch.children
+              .filter((v) => v.type === "tag")[0]
+              .children.filter((v) => v.type === "tag")[0]
+              .attribs.src.split("?")[0];
+          }
 
-        // * If ch doesn't have attribute title
-        else {
-          for (let si of chi) {
-            const type = si.attribs.class.split(" ")
-              ? si.attribs.class.split(" ").shift()
-              : si.attribs.class;
+          // * If ch doesn't have attribute title
+          else {
+            for (let si of chi) {
+              const type = si.attribs.class.split(" ")
+                ? si.attribs.class.split(" ").shift()
+                : si.attribs.class;
 
-            switch (type) {
-              case "type":
-                data.type = si.children.shift().data;
+              switch (type) {
+                case "type":
+                  data.type = si.children.shift().data;
 
-                break;
+                  break;
 
-              case "info":
-                const infos = si.children.filter((v) => v.type === "tag");
+                case "info":
+                  const infos = si.children.filter((v) => v.type === "tag");
 
-                for (let info of infos) {
-                  const infoType = info.attribs.class;
+                  for (let info of infos) {
+                    const infoType = info.attribs.class;
 
-                  if (infoType === "score" || infoType === "score full") {
-                    data.score = info.children
-                      .filter((v) => v.type === "text")
-                      .pop()
-                      .data.trim();
-                  } else if (infoType === "season") {
-                    data.season = info.children
-                      .filter((v) => v.type === "tag")
-                      .shift()
-                      .children.shift().data;
-                  } else {
-                    console.log(info);
+                    if (infoType === "score" || infoType === "score full") {
+                      data.score = info.children
+                        .filter((v) => v.type === "text")
+                        .pop()
+                        .data.trim();
+                    } else if (infoType === "season") {
+                      data.season = info.children
+                        .filter((v) => v.type === "tag")
+                        .shift()
+                        .children.shift().data;
+                    } else {
+                      console.log(info);
+                    }
                   }
-                }
 
-                break;
+                  break;
 
-              case "synops":
-                data.synops = si.children
-                  .filter((v) => v.type === "tag")
-                  .shift()
-                  .children.shift().data;
-                break;
+                case "synops":
+                  data.synops = si.children
+                    .filter((v) => v.type === "tag")
+                    .shift()
+                    .children.shift().data;
+                  break;
 
-              case "genres":
-                const genres = [];
+                case "genres":
+                  const genres = [];
 
-                si.children
-                  .shift()
-                  .children.filter((v) => v.type === "tag")
-                  .forEach((v) => {
-                    genres.push(v.children.shift().data);
-                  });
+                  si.children
+                    .shift()
+                    .children.filter((v) => v.type === "tag")
+                    .forEach((v) => {
+                      genres.push(v.children.shift().data);
+                    });
 
-                data.genres = genres;
+                  data.genres = genres;
 
-                break;
+                  break;
 
-              default:
-                break;
+                default:
+                  break;
+              }
             }
           }
         }
+
+        datas.push(data);
       }
 
-      datas.push(data);
+      resolve(datas);
+    } catch (e) {
+      reject(e);
     }
   });
-
-  callback(datas);
 }
 
-async function animeCharacter(name, callback) {
-  const res = await fetch(
-    `https://myanimelist.net/character.php?cat=character&q=${encodeURI(name)}`,
-    {
-      method: "GET",
-    }
-  ).then((v) => v.text());
+async function animeCharacter(name) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(
+        `https://myanimelist.net/character.php?cat=character&q=${encodeURI(
+          name
+        )}`,
+        {
+          method: "GET",
+        }
+      ).then((v) => v.text());
 
-  const $ = cheerio.load(res);
-  const datas = [];
+      const $ = cheerio.load(res);
+      const datas = [];
 
-  for (let i of $("tr")) {
-    const data = {
-      name: "",
-      link: "",
-      thumb: "",
-      anime: [],
-      others: [],
-    };
-    const o = i.children.filter((v) => v.type === "tag");
+      for (let i of $("tr")) {
+        const data = {
+          name: "",
+          link: "",
+          thumb: "",
+          anime: [],
+          others: [],
+        };
+        const o = i.children.filter((v) => v.type === "tag");
 
-    for (let u of o) {
-      for (let a of u.children.filter((v) => v.type === "tag")) {
-        switch (a.name) {
-          case "div": {
-            data.link = $(a).children("a")[0].attribs.href;
-            data.thumb = $(a).children("a")[0].children[0].attribs["data-src"];
-            break;
-          }
+        for (let u of o) {
+          for (let a of u.children.filter((v) => v.type === "tag")) {
+            switch (a.name) {
+              case "div": {
+                data.link = $(a).children("a")[0].attribs.href;
+                data.thumb =
+                  $(a).children("a")[0].children[0].attribs["data-src"];
+                break;
+              }
 
-          case "a": {
-            data.name = $(a)[0].children[0].data;
-            break;
-          }
+              case "a": {
+                data.name = $(a)[0].children[0].data;
+                break;
+              }
 
-          case "small": {
-            for (let small of a.children.filter((v) => v.type === "tag")) {
-              switch (small.name) {
-                case "a": {
-                  const anime = {
-                    title: "",
-                    link: "",
-                  };
+              case "small": {
+                for (let small of a.children.filter((v) => v.type === "tag")) {
+                  switch (small.name) {
+                    case "a": {
+                      const anime = {
+                        title: "",
+                        link: "",
+                      };
 
-                  anime.url = "https://myanimelist.net" + small.attribs.href;
-                  anime.title = small.children[0].data;
+                      anime.url =
+                        "https://myanimelist.net" + small.attribs.href;
+                      anime.title = small.children[0].data;
 
-                  data.anime.push(anime);
-                }
+                      data.anime.push(anime);
+                    }
 
-                case "div": {
-                  for (let other of small.children.filter(
-                    (v) => v.type === "tag"
-                  )) {
-                    switch (other.name) {
-                      case "a": {
-                        const others = {
-                          type: "",
-                          title: "",
-                          link: "",
-                        };
-                        others.type = other.attribs.href.split("/")[1];
-                        others.title = other.children[0].data;
-                        others.link =
-                          "https://myanimelist.net" + other.attribs.href;
-                        data.others.push(others);
+                    case "div": {
+                      for (let other of small.children.filter(
+                        (v) => v.type === "tag"
+                      )) {
+                        switch (other.name) {
+                          case "a": {
+                            const others = {
+                              type: "",
+                              title: "",
+                              link: "",
+                            };
+                            others.type = other.attribs.href.split("/")[1];
+                            others.title = other.children[0].data;
+                            others.link =
+                              "https://myanimelist.net" + other.attribs.href;
+                            data.others.push(others);
+                          }
+                        }
                       }
                     }
                   }
                 }
+                break;
               }
             }
-            break;
           }
         }
+
+        datas.push(data);
       }
+    } catch (e) {
+      reject(e);
     }
-
-    datas.push(data);
-  }
-
-  callback(datas);
+  });
 }
 
 async function animeCompany(name) {

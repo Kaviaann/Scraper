@@ -392,7 +392,7 @@ async function animagine(options = {}) {
  * Protected By MIT LICENSE
  * Whoever caught removing wm will be sued
  * @param {String} prompt
- * @param { String} system
+ * @param {String} system
  * @description Any Request? Contact me : vielynian@gmail.com
  * @author Kaviaann 2024
  * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
@@ -523,4 +523,102 @@ async function omniplexAi(
   });
 }
 
-export { Ai, stableDiff, animagine, omniplexAi };
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * @param {String} prompt
+ * @param {String} system
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
+async function copilot(prompt, system) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const BASE_URL = "https://omniplex.ai/api";
+      const headers = {
+        origin: BASE_URL.replace("/api", ""),
+        "user-agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "Content-Type": "application/json",
+      };
+
+      const chatJSON = {
+        frequency_penalty: 0,
+        max_tokens: 512,
+        messages: [
+          {
+            role: "system",
+            content: system,
+          },
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        model: "gpt-3.5-turbo",
+        presence_penalty: 0,
+        temperature: 1,
+        top_p: 1,
+      };
+
+      const a = await fetch(BASE_URL + "/think", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          text: prompt,
+        }),
+      }).then((v) => v.json());
+
+      if (a.error) return reject("Failed to think");
+
+      if (a.furtherInfo) {
+        return resolve("Give more spesific prompt");
+      } else {
+        const b = await fetch(
+          BASE_URL +
+            "/multiSearch?" +
+            new URLSearchParams({
+              q: a.questions.join(","),
+              limit: 15,
+            })
+        ).then((v) => v.json());
+
+        if (b.message !== "Success") return reject("Failed to search");
+
+        const c = await fetch(
+          BASE_URL +
+            "/scrape?" +
+            new URLSearchParams({
+              urls: b.data.webPages.value.map((v) => v.url).join(","),
+            }),
+          {
+            method: "POST",
+            headers,
+          }
+        ).then((v) => v.text());
+
+        if (!c) return reject("Failed to scrape");
+        chatJSON.messages[1].content = c + "\n\nQuestion : " + prompt;
+        chatJSON.messages[0].content = `Generate a comprehensive and informative answer (but no more than 256 words in 2 paragraphs) for a given question solely based on the provided web Search Results (URL and Summary).You must only use information from the provided search results.Use an unbiased and journalistic tone.Use this current date and time: ${new Date().toUTCString()}.Combine search results together into a coherent answer.Do not repeat text.Only cite the most relevant results that answer the question accurately.If different results refer to different entities with the same name, write separate answers for each entity.You have the ability to search and will be given websites and the scarped data from them and you will have to make up an answer with that only. ${system}`;
+        const d = await fetch(BASE_URL + "/chat", {
+          method: "POST",
+          headers,
+          body: JSON.stringify(chatJSON),
+        }).then((v) => v.text());
+
+        if (!d) return reject("Failed to generate answer");
+        resolve({
+          data: d,
+          search: b.data,
+          questions: a.questions,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export { Ai, stableDiff, animagine, omniplexAi, copilot };

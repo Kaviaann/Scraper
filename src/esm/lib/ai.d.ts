@@ -113,6 +113,12 @@ export declare interface IOmniplexResponse {
   search?: IOmniplexSearch;
 }
 
+export declare interface ICopilotResponse {
+  data: String;
+  search?: IOmniplexSearch;
+  questions: String[];
+}
+
 export declare function stableDiff(
   prompt: String,
   negative: String
@@ -124,3 +130,7 @@ export declare function omniplexAi(
   prompt: String,
   system: String
 ): Promise<IOmniplexResponse>;
+export declare function copilot(
+  prompt: String,
+  system: String
+): Promise<ICopilotResponse>;

@@ -48,7 +48,14 @@ async function igStalk(user) {
       `https://igram.world/api/ig/userInfoByUsername/${user.replace(
         /[^\w\d]/gi,
         ""
-      )}`
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "user-agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        },
+      }
     )
       .then((v) => v.json())
       .then((v) => v.result)

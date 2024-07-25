@@ -154,14 +154,8 @@ export declare interface IMeganeiInfo {
   };
 }
 
-export declare function animeSearch(
-  name: string,
-  callback: (datas: AnimeData[]) => Promise<void>
-): Promise<void>;
-export declare function animeCharacter(
-  name: string,
-  callback: (datas: CharacterData[]) => Promise<void>
-): Promise<void>;
+export declare function animeSearch(name: string): Promise<AnimeData[]>;
+export declare function animeCharacter(name: string): Promise<CharacterData[]>;
 export declare function animeCompany(name: string): Promise<CompanyData>;
 export declare function animeCompanyInfo(name: string): Promise<CompanyInfo>;
 export declare function mangaSearch(query: String): Promise<IMangaSearch[]>;

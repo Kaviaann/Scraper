@@ -142,6 +142,8 @@ animeSearch("Boku No Hero Academia", (datas) => {
 | 23/07/24 |    npmSearch     | Search with Npm                                                                             |
 | 23/07/24 |   npmSearchh2    | Search with different SEO                                                                   |
 | 23/07/24 |       npm        | Get info about the given package name                                                       |
+| 25/07/24 |    omniplexAi    | Omniplex AI With search and chat mode                                                       |
+| 25/07/24 |     copilot      | Copilot AI Like                                                                             |
 
 <br>
 <br>
