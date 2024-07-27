@@ -1,4 +1,4 @@
-export interface Twitter {
+export declare interface Twitter {
   desc: String;
   thumbnail: URL;
   video_sd: URL;

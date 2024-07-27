@@ -1,10 +1,10 @@
-export interface IDrive {
+export declare interface IDrive {
   name: String;
   download: String;
   link: String;
 }
 
-export interface ITerabox {
+export declare interface ITerabox {
   video?: {
     name: String;
     video: String;
@@ -17,7 +17,7 @@ export interface ITerabox {
   };
 }
 
-export interface IMediafire {
+export declare interface IMediafire {
   name: String;
   filename: String;
   type: String;
@@ -99,6 +99,18 @@ export declare interface IGofile {
   children: IGoChild;
 }
 
+export declare interface ISamehadaku {
+  title: String;
+  link: String;
+  downloads: {
+    name: String;
+    post: String;
+    nume: String;
+    type: "schtml";
+    link: String;
+  }[];
+}
+
 export declare function terabox(url: String): Promise<ITerabox>;
 export declare function drive(url: String): Promise<IDrive>;
 export declare function mediafire(url: String): Promise<IMediafire>;
@@ -108,3 +120,4 @@ export declare function cobalt(
   options: ICobaltOptions
 ): Promise<ICobaltDownload>;
 export declare function gofile(url: String): Promise<IGofile>;
+export declare function samehadaku(url: String): Promise<ISamehadaku>;

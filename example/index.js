@@ -1,7 +1,7 @@
 /* <=====  This is an example for CommonJS  =====> */
-const { animeSearch } = require("../src/cjs");
+const { animeSearch } = require("../src/cjs/index.js");
 
-animeSearch("Evangelion", (datas) => {
+animeSearch("kaijuu").then((datas) => {
   if (!Buffer.compare(Buffer.from(datas), Buffer.from([])))
     console.log(`Anime Not Found`);
   else {

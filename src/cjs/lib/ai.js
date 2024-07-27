@@ -1,5 +1,5 @@
 const cheerio = require("cheerio");
-const fetch = require("node-fetch");
+const fetch = import("node-fetch");
 
 /**
  * SCRAPED BY KAVIAANN

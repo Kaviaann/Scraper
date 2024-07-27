@@ -1,4 +1,4 @@
-export interface ISticker {
+export declare interface ISticker {
   id: string;
   name: string;
   name_detail: string;
@@ -40,7 +40,7 @@ export interface ISticker {
   category: string;
 }
 
-export interface IStickerResponse {
+export declare interface IStickerResponse {
   total_get: string;
   page: number;
   stickers: ISticker[];

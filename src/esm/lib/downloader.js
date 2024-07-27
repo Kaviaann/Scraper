@@ -1,6 +1,7 @@
 import cheerio from "cheerio";
 import path from "path";
 import fetch from "node-fetch";
+import FormData from "form-data";
 
 async function terabox(url) {
   return new Promise(async (resolve, reject) => {
@@ -297,4 +298,74 @@ async function gofile(url) {
   });
 }
 
-export { drive, mediafire, terabox, snackVideo, cobalt, gofile };
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
+async function samehadaku(url) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!/samehadaku\.email/gi.test(url)) return reject("Invalid URL!");
+      const html = await fetch(url, {
+        method: "GET",
+        headers: {
+          "user-agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+        },
+      });
+
+      if (!html.ok) return reject("Error Fetching");
+      const $ = cheerio.load(await html.text());
+      const data = {
+        title: $('h1[itemprop="name"]').text().trim(),
+        link: url,
+        downloads: [],
+      };
+
+      data.downloads = await Promise.all(
+        $("div#server > ul > li").map(async (i, el) => {
+          const v = {
+            name: $(el).find("span").text().trim(),
+            post: $(el).find("div").attr("data-post"),
+            nume: $(el).find("div").attr("data-nume"),
+            type: $(el).find("div").attr("data-type"),
+            link: "",
+          };
+
+          const A = new FormData();
+          A.append("action", "player_ajax");
+          A.append("post", v.post);
+          A.append("nume", v.nume);
+          A.append("type", v.type);
+
+          v.link = await fetch(
+            "https://samehadaku.email/wp-admin/admin-ajax.php",
+            {
+              method: "POST",
+              headers: {
+                "user-agent":
+                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+                origin: "https://samehadaku.email",
+              },
+              body: A,
+            }
+          )
+            .then((v) => v.text())
+            .then((v) => cheerio.load(v)("iframe").attr("src"));
+
+          return v;
+        })
+      );
+
+      return resolve(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export { drive, mediafire, terabox, snackVideo, cobalt, gofile, samehadaku };

@@ -621,4 +621,23 @@ async function copilot(prompt, system) {
   });
 }
 
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
+async function bingImage(prompt) {
+  return new Promise(async (resolve, reject) => {
+    try{
+      
+    }
+    catch(e) {
+      reject(e)
+    }
+  })
+}
+
 export { Ai, stableDiff, animagine, omniplexAi, copilot };

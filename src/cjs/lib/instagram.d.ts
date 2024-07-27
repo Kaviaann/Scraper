@@ -1,23 +1,23 @@
-export interface InstagramDownload {
+export declare interface InstagramDownload {
   thumbnail: URL;
   type: "image" | "video";
   media: URL;
   link: URL;
 }
 
-export interface InstagramSignature {
+export declare interface InstagramSignature {
   expires: Number;
   signature: String;
 }
 
-export interface InstagramEntities {
+export declare interface InstagramEntities {
   user: {
     id: Number;
     username: String;
   }[];
 }
 
-export interface InstagramStalk {
+export declare interface InstagramStalk {
   user: {
     primary_profile_link_type: Number;
     show_fb_link_on_profile: Boolean;

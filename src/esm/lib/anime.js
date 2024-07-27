@@ -816,6 +816,67 @@ class Meganei {
   }
 }
 
+/**
+ * Scraped By Kaviaann
+ * Protected By MIT LICENSE
+ * Whoever caught removing wm will be sued
+ * @description Any Request? Contact me : vielynian@gmail.com
+ * @author Kaviaann 2024
+ * @copyright https://whatsapp.com/channel/0029Vac0YNgAjPXNKPXCvE2e
+ */
+async function latestAnime() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const url = "https://samehadaku.email/anime-terbaru/";
+      const html = await fetch(url, {
+        headers: {
+          "user-agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+        },
+      });
+
+      if (!html.ok) return reject("Website Down");
+      const $ = cheerio.load(await html.text());
+      const ul = $("div.post-show > ul").children("li");
+      const data = {
+        total: 0,
+        anime: [],
+      };
+
+      for (let el of ul) {
+        data.anime.push({
+          title: $(el)
+            .find("h2.entry-title")
+            .text()
+            .trim()
+            .split(" Episode")[0],
+          thumbnail: $(el).find("div.thumb > a > img").attr("src"),
+          postedBy: $(el)
+            .find('span[itemprop="author"] > author')
+            .text()
+            .trim(),
+          episode: $(el).find("span").eq(0).find("author").text().trim(),
+          release: $(el)
+            .find('span[itemprop="author"]')
+            .next()
+            .contents()
+            .eq(3)
+            .text()
+            .split(": ")[1]
+            .trim(),
+          link: $(el).find("a").attr("href"),
+        });
+      }
+
+      data.total = data.anime.length;
+
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 export {
   animeCharacter,
   animeCompany,
@@ -824,4 +885,5 @@ export {
   mangaSearch,
   manga,
   Meganei,
+  latestAnime,
 };

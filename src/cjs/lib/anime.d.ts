@@ -1,4 +1,4 @@
-export interface AnimeData {
+export declare interface AnimeData {
   title: String;
   link: String;
   thumb: String;
@@ -9,36 +9,36 @@ export interface AnimeData {
   genres: String[];
 }
 
-export interface CharacterAnime {
+export declare interface CharacterAnime {
   title: String;
   link: String;
 }
 
-export interface CharacterOther {
+export declare interface CharacterOther {
   type: String | "manga";
   title: String;
   link: String;
 }
-export interface CharacterData {
+export declare interface CharacterData {
   title: String;
   link: String;
   thumb: String;
   anime: CharacterAnime[];
   other: CharacterOther[];
 }
-export interface CompanyData {
+export declare interface CompanyData {
   name: String;
   small: String;
   link: String;
   thumbnail: String;
 }
 
-export interface CompanyInfos {
+export declare interface CompanyInfos {
   from: String;
   main: String;
 }
 
-export interface CompanyNews {
+export declare interface CompanyNews {
   title: String;
   thumbnail: String;
   snippets: String;
@@ -57,7 +57,7 @@ export interface CompanyNews {
   };
 }
 
-export interface CompanyAnimes {
+export declare interface CompanyAnimes {
   title: String;
   thumbnail: String;
   link: String;
@@ -65,7 +65,7 @@ export interface CompanyAnimes {
   stars: String;
   users: String;
 }
-export interface CompanyInfo {
+export declare interface CompanyInfo {
   name: String;
   logo: String;
   create_time: Number;
@@ -154,6 +154,18 @@ export declare interface IMeganeiInfo {
   };
 }
 
+export declare interface ILatestAnime {
+  total: Number;
+  anime: {
+    title: String;
+    thumbnail: String;
+    postedBy: String;
+    episode: String;
+    release: String;
+    link: String;
+  }[];
+}
+
 export declare function animeSearch(name: string): Promise<AnimeData[]>;
 export declare function animeCharacter(name: string): Promise<CharacterData[]>;
 export declare function animeCompany(name: string): Promise<CompanyData>;
@@ -163,3 +175,4 @@ export declare class Meganei {
   search(query: String): Promise<IMeganeiSearch>;
   info(url: String): Promise<IMeganeiInfo>;
 }
+export declare function latestAnime(): Promise<ILatestAnime>;

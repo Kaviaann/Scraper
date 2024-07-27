@@ -1,7 +1,7 @@
 /* <=====  This is an example for CommonJS  =====> */
 import * as scraper from "../src/esm/index.js";
 
-scraper.animeSearch("Evangelion", (datas) => {
+scraper.animeSearch("Evangelion").then((datas) => {
   if (!Buffer.compare(Buffer.from(datas), Buffer.from([])))
     console.log(`Anime Not Found`);
   else {

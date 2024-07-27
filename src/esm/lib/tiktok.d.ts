@@ -1,4 +1,4 @@
-export interface ITiktokMusicInfo {
+export declare interface ITiktokMusicInfo {
   id: String;
   title: String;
   play: URL;
@@ -7,7 +7,7 @@ export interface ITiktokMusicInfo {
   duration: Number;
   album: String;
 }
-export interface ITiktokVideoData {
+export declare interface ITiktokVideoData {
   title: String;
   cover: URL;
   origin_cover: URL;
@@ -23,7 +23,7 @@ export interface ITiktokVideoData {
   save: Number | null;
   create_time: Number;
 }
-export interface ITiktokPostData {
+export declare interface ITiktokPostData {
   title: String;
   duration: Number;
   origin_cover: URL;
@@ -39,7 +39,7 @@ export interface ITiktokPostData {
   music: ITiktokMusicInfo;
 }
 
-export interface ITiktokSlide {
+export declare interface ITiktokSlide {
   author: String;
   username: String;
   profile: String;
@@ -56,7 +56,7 @@ export interface ITiktokSlide {
   slides: String[];
 }
 
-export interface ITiktokUser {
+export declare interface ITiktokUser {
   photo: String;
   username: String;
   name: String;
