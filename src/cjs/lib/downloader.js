@@ -1,5 +1,5 @@
 const cheerio = require("cheerio");
-const fetch = import("node-fetch");
+const fetch = require("node-fetch");
 const path = require("path");
 
 async function terabox(url) {
